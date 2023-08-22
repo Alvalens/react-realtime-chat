@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Chat from "./pages/Chat";
 import About from "./pages/About";
+import ChatHome from "./pages/ChatHome";
 import { AuthProvider } from "./contexts/AuthContext";
 // import components
 import Navbar from "./components/Navbar";
@@ -19,6 +20,7 @@ function App() {
 						<Route path="/" element={<Home />} />
 						<Route path="/chat" element={<Chat />} />
 						<Route path="/about" element={<About />} />
+						<Route path="/chat-home" element={<ChatHome />} />
 					</Routes>
 					<Footer />
 				</AuthProvider>
