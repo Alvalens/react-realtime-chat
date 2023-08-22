@@ -7,9 +7,12 @@ import {
 	limit,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import { useAuth } from "../contexts/AuthContext";
+
+// components
 import Message from "../components/Message";
 import SendMessage from "../components/SendMessage";
-import { useAuth } from "../contexts/AuthContext";
+import Loader from "../components/Loader";
 
 const Chat = () => {
 	const { user } = useAuth();
@@ -48,23 +51,14 @@ const Chat = () => {
 
 	if (loadings ) {
 		return (
-			<div className="flex items-center justify-center h-screen">
-				<div className="w-12 h-12 border-t-2 border-grey-900 border-b-2 rounded-full animate-spin"></div>
-			</div>
+			<Loader />
 		);
 	}
 
-	if(!user)	{
-		return (
-			<div className="flex items-center justify-center h-screen">
-				<h1 className="text-3xl font-semibold text-center">
-					Please Login to Chat
-				</h1>
-			</div>
-		);
-	}
+
 	return (
 		<>
+		{user ? (
 			<div className="relative flex justify-center items-center min-w-full h-[69vh] bg-slate-200 overflow-y-scroll">
 				<div className="h-[630px] w-[400px] md:w-[700px] lg:w-[1200px] pt-11">
 					<div className="flex flex-col-reverse space-y-2">
@@ -78,6 +72,13 @@ const Chat = () => {
 					</div>
 				</div>
 			</div>
+) : (
+				<div className="flex items-center justify-center h-screen">
+				<h1 className="text-3xl font-semibold text-center">
+					Please Login to Chat
+				</h1>
+			</div>)
+	}
 		</>
 	);
 };
