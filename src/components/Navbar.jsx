@@ -1,19 +1,21 @@
 import { Link } from "react-router-dom";
 import { Navbar, Button, Menu } from "react-daisyui";
+import { useAuth } from "../contexts/AuthContext";
 
 const NavbarC = () => {
+	const { user } = useAuth();
 	return (
 		<>
 			<Navbar>
 				<Navbar.Start>
 					<Link to="/" className="btn btn-ghost normal-case text-xl">
-						daisyUI
+						React Chat
 					</Link>
 				</Navbar.Start>
 				<Navbar.Center className="hidden lg:flex">
 					<Menu horizontal className="px-1">
 						<Menu.Item>
-							<Link to="/about">Home</Link>
+							<Link to="/">Home</Link>
 						</Menu.Item>
 						<Menu.Item>
 							<Link to="/about">About</Link>
@@ -24,7 +26,14 @@ const NavbarC = () => {
 					</Menu>
 				</Navbar.Center>
 				<Navbar.End>
-					<Button tag="a">Button</Button>
+					{user ? (
+						<Button>Logout</Button>
+					)
+					: (
+						<Link to="/" >
+						<Button>Login</Button>
+						</Link>
+					)}
 				</Navbar.End>
 			</Navbar>
 		</>

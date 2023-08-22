@@ -9,10 +9,12 @@ import {
 import { db } from "../firebase";
 import Message from "../components/Message";
 import SendMessage from "../components/SendMessage";
+import { useAuth } from "../contexts/AuthContext";
 
-const ChatBox = () => {
+const Chat = () => {
+	const { user } = useAuth();
 	const [messages, setMessages] = useState([]);
-	const [loading, setLoading] = useState(true);
+	const [loadings, setLoading] = useState(true);
 	const scroll = useRef();
 
 	useEffect(() => {
@@ -32,7 +34,7 @@ const ChatBox = () => {
 				(a, b) => b.createdAt - a.createdAt
 			);
 			setMessages(sortedMessages);
-			setLoading(false); // Move setLoading(false) here
+			setLoading(false); 
 		});
 
 		return () => unsubscribe();
@@ -44,7 +46,7 @@ const ChatBox = () => {
 		}
 	}, [messages]);
 
-	if (loading) {
+	if (loadings ) {
 		return (
 			<div className="flex items-center justify-center h-screen">
 				<div className="w-12 h-12 border-t-2 border-grey-900 border-b-2 rounded-full animate-spin"></div>
@@ -52,6 +54,15 @@ const ChatBox = () => {
 		);
 	}
 
+	if(!user)	{
+		return (
+			<div className="flex items-center justify-center h-screen">
+				<h1 className="text-3xl font-semibold text-center">
+					Please Login to Chat
+				</h1>
+			</div>
+		);
+	}
 	return (
 		<>
 			<div className="relative flex justify-center items-center min-w-full h-[69vh] bg-slate-200 overflow-y-scroll">
@@ -71,4 +82,4 @@ const ChatBox = () => {
 	);
 };
 
-export default ChatBox;
+export default Chat;
