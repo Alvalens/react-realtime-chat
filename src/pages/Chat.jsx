@@ -5,9 +5,11 @@ import {
 	orderBy,
 	onSnapshot,
 	limit,
+	where,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
+import { useLocation } from "react-router-dom";
 
 // components
 import Message from "../components/Message";
@@ -18,12 +20,16 @@ const Chat = () => {
 	const { user } = useAuth();
 	const [messages, setMessages] = useState([]);
 	const [loadings, setLoading] = useState(true);
+	const location = useLocation();
+	const queryParams = new URLSearchParams(location.search);
+	const groupId = queryParams.get("groupId");
 	const scroll = useRef();
 
 	useEffect(() => {
 		setLoading(true);
 		const q = query(
 			collection(db, "messages"),
+			where("groupId", "==", groupId),
 			orderBy("createdAt", "desc"),
 			limit(50)
 		);
@@ -37,9 +43,8 @@ const Chat = () => {
 				(a, b) => b.createdAt - a.createdAt
 			);
 			setMessages(sortedMessages);
-			setLoading(false); 
+			setLoading(false);
 		});
-
 		return () => unsubscribe();
 	}, []);
 
@@ -49,36 +54,33 @@ const Chat = () => {
 		}
 	}, [messages]);
 
-	if (loadings ) {
-		return (
-			<Loader />
-		);
+	if (loadings) {
+		return <Loader />;
 	}
-
 
 	return (
 		<>
-		{user ? (
-			<div className="relative flex justify-center items-center min-w-full h-[69vh] bg-slate-200 overflow-y-scroll">
-				<div className="h-[630px] w-[400px] md:w-[700px] lg:w-[1200px] pt-11">
-					<div className="flex flex-col-reverse space-y-2">
-						{messages.map((message) => (
-							<Message key={message.id} message={message} />
-						))}
-					</div>
-					<span ref={scroll}></span>
-					<div className="sticky min-w-[80%] bottom-1">
-						<SendMessage scroll={scroll} />
+			{user ? (
+				<div className="relative flex justify-center items-center min-w-full h-[69vh] bg-slate-200 overflow-y-scroll">
+					<div className="h-[630px] w-[400px] md:w-[700px] lg:w-[1200px] pt-11">
+						<div className="flex flex-col-reverse space-y-2">
+							{messages.map((message) => (
+								<Message key={message.id} message={message} />
+							))}
+						</div>
+						<span ref={scroll}></span>
+						<div className="sticky min-w-[80%] bottom-1">
+							<SendMessage scroll={scroll} groupId={groupId}/>
+						</div>
 					</div>
 				</div>
-			</div>
-) : (
+			) : (
 				<div className="flex items-center justify-center h-screen">
-				<h1 className="text-3xl font-semibold text-center">
-					Please Login to Chat
-				</h1>
-			</div>)
-	}
+					<h1 className="text-3xl font-semibold text-center">
+						Please Login to Chat
+					</h1>
+				</div>
+			)}
 		</>
 	);
 };
