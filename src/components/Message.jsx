@@ -44,6 +44,8 @@ Message.propTypes = {
 		avatar: PropTypes.string.isRequired,
 		name: PropTypes.string.isRequired,
 		createdAt: PropTypes.shape({
+			seconds: PropTypes.number.isRequired,
+			nanoseconds: PropTypes.number.isRequired,
 			toDate: PropTypes.func.isRequired,
 		}).isRequired,
 	}).isRequired,
