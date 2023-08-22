@@ -26,6 +26,9 @@ dependencies:
   firebase:
     specifier: ^10.2.0
     version: 10.2.0(react-native@0.72.4)
+  prop-types:
+    specifier: ^15.8.1
+    version: 15.8.1
   react:
     specifier: ^18.2.0
     version: 18.2.0
