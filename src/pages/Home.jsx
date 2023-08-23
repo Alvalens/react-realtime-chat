@@ -11,16 +11,17 @@ import Chat from "../assets/chat.png";
 import Loader from "../components/Loader";
 
 const Home = () => {
-	const { user, googleSignIn, logout, loading } = useAuth();
-	const [loadings, setLoading] = useState(true);
+	const { user, googleSignIn, logout, loading: authLoad } = useAuth();
+	const [loading, setLoading] = useState(true);
 
-	useEffect(() => {
-		setTimeout(() => {
+	useEffect(() => {	
+		if (!authLoad || user) {
 			setLoading(false);
-		}, 1500);
-	} ,[]);
+		}
 
-if (loadings || loading) {
+	}, [authLoad, user]);
+
+if (loading || authLoad) {
 	return (
 		<Loader />
 	);
