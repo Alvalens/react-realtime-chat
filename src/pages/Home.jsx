@@ -5,8 +5,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
 
-// assets
-import "../App.css"
+// components
 import Chat from "../assets/chat.png";
 import Loader from "../components/Loader";
 
