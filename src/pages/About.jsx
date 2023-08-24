@@ -19,8 +19,7 @@ const About = () => {
 						About This Project
 					</h1>
 					<p className="text-gray-500 dark:text-gray-300 px-2 md:px-36 pt-2">
-						This is my second React project, Realtime Chat App with
-						Firebase,Tailwind CSS, Daisyui. This is my ambitious project because i'am new to React JS and also this is my first time using firebase. But beside that, i'am also learning many things about react. If you want to know more about this project, you can visit <a href="http://">Github repository.</a>
+						This is my second React project, React Chat. This is my ambitious project because i'am still new to React JS and also this is my first time using firebase. But beside that, i'am also learning many things about react. If you want to know more about this project, you can visit <a href="http://">Github repository.</a> Also if you have any suggestion or feedback, you can contact me via social media below. Thank you for visiting my website.
 					</p>
 					{/* container 2 grid */}
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">

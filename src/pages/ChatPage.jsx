@@ -103,7 +103,7 @@ const ChatPage = () => {
 			</div>
 		);
 	}
-	console.log(messages);
+
 	return (
 		<>
 			<div className="flex justify-center items-center min-w-full h-[62vh] mb-16 bg-slate-200 overflow-y-scroll dark:bg-gray-900 mt-24">
