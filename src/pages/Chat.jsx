@@ -81,7 +81,7 @@ const Chat = () => {
 	return (
 		<>
 			<div className="relative flex justify-center items-center min-w-full h-[69vh] bg-slate-200 overflow-y-scroll">
-				<div className="h-[630px] w-[400px] md:w-[700px] lg:w-[1200px] pt-11">
+				<div className="h-[630px] w-full md:w-[700px] lg:w-[1200px] pt-11">
 					<div className="flex flex-col-reverse space-y-2">
 						{messages.map((message) => (
 							<Message key={message.id} message={message} />
