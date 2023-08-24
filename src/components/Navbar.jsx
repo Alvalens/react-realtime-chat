@@ -91,7 +91,7 @@ const NavbarC = () => {
 							</Menu.Item>
 						</Menu>
 					</div>
-					<Navbar.End className="max-w-[44%]">
+					<Navbar.End className="max-w-[41%]">
 						{user ? (
 							<Button className="hover:bg-red-400 hover:border-gray-500 capitalize text-lg">Logout</Button>
 						) : (

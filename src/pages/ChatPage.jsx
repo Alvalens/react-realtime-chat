@@ -12,11 +12,14 @@ import {
 import { db } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
 import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // components
 import Message from "../components/Message";
 import SendMessage from "../components/SendMessage";
 import Loader from "../components/Loader";
+
+
 
 const ChatPage = () => {
 	const { user, loading: authLoad } = useAuth();
