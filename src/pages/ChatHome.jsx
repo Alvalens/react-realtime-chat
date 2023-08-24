@@ -375,9 +375,7 @@ const ChatHome = () => {
 	}, [user, authLoad]);
 
 	if (authLoad || loading) {
-		return (
-				<Loader />
-		);
+		return <Loader />;
 	} else if (!user) {
 		return (
 			<div className="flex items-center justify-center h-screen">
@@ -407,7 +405,7 @@ const ChatHome = () => {
 				<div className="body p-4 w-full md:w-[700px] lg:w-[1100px]">
 					{loading ? (
 						<>
-								<Loader />
+							<Loader />
 						</>
 					) : (
 						<Groups data={groups} />

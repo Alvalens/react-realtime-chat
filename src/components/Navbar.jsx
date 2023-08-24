@@ -16,7 +16,7 @@ const NavbarC = () => {
 				open={visible}
 				onClickOverlay={toggleVisible}
 				side={
-					<Menu className="p-4 w-60 md:w-80 h-full bg-base-200">
+					<Menu className="p-4 w-60 md:w-80 h-full bg-base-200 z-50">
 						{/* title */}
 						<Menu.Title className=" text-gray-400 text-xl">
 							Menu
@@ -45,7 +45,7 @@ const NavbarC = () => {
 						</Menu.Item>
 					</Menu>
 				}>
-				<Navbar className="fixed w-full bg-gray-700 mt-1  rounded-2xl shadow-md border-2 border-gray-800 dark:bg-gray-900 dark:border-orange-700">
+				<Navbar className="fixed w-full bg-gray-700 mt-1  rounded-2xl shadow-md border-2 border-gray-800 dark:bg-gray-900 dark:border-dark-700">
 					<div className="flex-none lg:hidden">
 						<Button
 							shape="square"
