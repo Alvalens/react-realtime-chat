@@ -13,20 +13,24 @@ const Home = () => {
 	const { user, googleSignIn, logout, loading: authLoad } = useAuth();
 	const [loading, setLoading] = useState(true);
 
-	useEffect(() => {	
-		if (!authLoad || user) {
+	useEffect(() => {
+		if (!authLoad && user) {
 			setLoading(false);
 		}
-
+			setTimeout(() => {
+				setLoading(false);
+			}, 2000);
 	}, [authLoad, user]);
 
-if (loading || authLoad) {
+	if (loading || authLoad) {
+		return <Loader />;
+	}
+
+	const alert = () => {
+		window.alert("This feature is not available yet");
+	}
 	return (
-		<Loader />
-	);
-}
-	return (
-		<section className="flex justify-center items-center bg-slate-200 dark:bg-gray-900 min-h-[50rem]">
+		<section className="flex justify-center items-center bg-slate-200 dark:bg-gray-900 min-h-[50rem] mt-24">
 			<div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
 				<div className="mr-auto place-self-center lg:col-span-7">
 					<div className="flex lg:mt-0 lg:col-span-5 lg:hidden">
@@ -47,12 +51,12 @@ if (loading || authLoad) {
 						<>
 							<button
 								onClick={logout}
-								className="inline-flex  items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+								className="btn capitalize inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
 								Logout
 							</button>
 							<Link
 								to={"/chat-home"}
-								className="ml-2 inline-flex text-white bg-gray-700 items-center justify-center px-5 py-3 text-base font-medium text-center  border border-gray-300 rounded-lg hover:text-black hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+								className="btn capitalize ml-2 inline-flex text-white bg-gray-700 items-center justify-center px-5 py-3 text-base font-medium text-center  border border-gray-300 rounded-lg hover:text-black hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
 								Chat
 							</Link>
 						</>
@@ -60,7 +64,7 @@ if (loading || authLoad) {
 						<div>
 							<button
 								onClick={googleSignIn}
-								className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+								className="btn capitalize inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
 								<FontAwesomeIcon
 									icon={faGoogle}
 									className="mr-2"
@@ -68,7 +72,8 @@ if (loading || authLoad) {
 								Login with Google
 							</button>
 
-							<button className="inline-flex ml-2 items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+							<button className="btn capitalize inline-flex ml-2 items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+							onClick={alert}>
 								<FontAwesomeIcon
 									icon={faGithub}
 									className="mr-2"

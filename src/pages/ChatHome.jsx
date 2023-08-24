@@ -376,9 +376,7 @@ const ChatHome = () => {
 
 	if (authLoad || loading) {
 		return (
-			<div className="flex justify-center items-center h-[69vh]">
 				<Loader />
-			</div>
 		);
 	} else if (!user) {
 		return (
@@ -392,7 +390,7 @@ const ChatHome = () => {
 
 	return (
 		<>
-			<div className="flex flex-col items-center justify-start h-[640px] bg-slate-200 dark:bg-gray-900">
+			<div className="flex flex-col items-center justify-start h-[640px] bg-slate-200 dark:bg-gray-900 mt-24">
 				<div className="header min-w-full">
 					<h1 className="text-3xl font-bold mb-4 text-center mt-3">
 						Create a New Group
@@ -409,9 +407,7 @@ const ChatHome = () => {
 				<div className="body p-4 w-full md:w-[700px] lg:w-[1100px]">
 					{loading ? (
 						<>
-							<div className="flex justify-center items-center h-[69vh]">
 								<Loader />
-							</div>
 						</>
 					) : (
 						<Groups data={groups} />
