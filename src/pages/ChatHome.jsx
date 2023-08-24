@@ -82,7 +82,6 @@ const Groups = ({ data }) => {
 
 	const handleRightClick = (event, group) => {
 		event.preventDefault();
-		console.log(`Right-clicked on group ${group}`);
 		group.icon = checkIcon(group.icon);
 		setGroupName(group.name);
 		setSelectedGroup(group);
@@ -165,7 +164,6 @@ const Groups = ({ data }) => {
 		setGroupName("");
 		modal.closeModal();
 	};
-	console.log(isCreator);
 	return (
 		<>
 			<div className="flex flex-col space-y-3">
