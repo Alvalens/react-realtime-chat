@@ -62,8 +62,7 @@ const Group = ({ name, user, msg, total, icon }) => {
 
 	return (
 		<>
-
-			<div className="min-w-full min-h-[70px] flex justify-between items-center bg-slate-300 rounded-lg px-5 py-2">
+			<div className="min-w-full min-h-[70px] flex justify-between items-center bg-slate-300 rounded-lg px-5 py-2 hover:bg-slate-400 dark:bg-gray-700 dark:hover:bg-gray-600 transition-all duration-300 ease-in-out">
 				<div className="flex">
 					{/* icon */}
 					<div className="flex justify-center items-center">

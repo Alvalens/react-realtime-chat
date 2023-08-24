@@ -13,7 +13,6 @@ import {
 	limit,
 	doc,
 	deleteDoc,
-
 } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
@@ -32,106 +31,105 @@ import { faBriefcase } from "@fortawesome/free-solid-svg-icons";
 import { faSchool } from "@fortawesome/free-solid-svg-icons";
 import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
 
-	const checkIcon = (icon) => {
-		if (icon === "bomb") {
-			icon = faBomb;
-		} else if (icon === "code") {
-			icon = faCode;
-		} else if (icon === "mug-hot") {
-			icon = faMugHot;
-		} else if (icon === "poo") {
-			icon = faPoo;
-		} else if (icon === "briefcase") {
-			icon = faBriefcase;
-		} else if (icon === "school") {
-			icon = faSchool;
-		} else {
-			icon = faUserGroup;
-		}
-		return icon;
-	};
+const checkIcon = (icon) => {
+	if (icon === "bomb") {
+		icon = faBomb;
+	} else if (icon === "code") {
+		icon = faCode;
+	} else if (icon === "mug-hot") {
+		icon = faMugHot;
+	} else if (icon === "poo") {
+		icon = faPoo;
+	} else if (icon === "briefcase") {
+		icon = faBriefcase;
+	} else if (icon === "school") {
+		icon = faSchool;
+	} else {
+		icon = faUserGroup;
+	}
+	return icon;
+};
 const Groups = ({ data }) => {
 	const [holdTimer, setHoldTimer] = useState(null);
-  const [groupName, setGroupName] = useState("");
-  const [selectedGroup, setSelectedGroup] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
+	const [groupName, setGroupName] = useState("");
+	const [selectedGroup, setSelectedGroup] = useState(null);
+	const [loading, setLoading] = useState(false);
+	const [open, setOpen] = useState(false);
 
-  const modal = ModalUse();
+	const modal = ModalUse();
 
-  const openIcon = () => {
-    setOpen(!open);
-  };
+	const openIcon = () => {
+		setOpen(!open);
+	};
 
-  const handleIconSelect = (icon) => {
-    setSelectedGroup((prevGroup) => ({
-      ...prevGroup,
-      icon: icon,
-    }));
-    setOpen(false);
-  };
+	const handleIconSelect = (icon) => {
+		setSelectedGroup((prevGroup) => ({
+			...prevGroup,
+			icon: icon,
+		}));
+		setOpen(false);
+	};
 
-  const handleRightClick = (event, group) => {
-    event.preventDefault();
-    console.log(`Right-clicked on group ${group}`);
-    group.icon = checkIcon(group.icon);
-		setGroupName (group.name);
-    setSelectedGroup(group);
-    modal.openModal();
-  };
+	const handleRightClick = (event, group) => {
+		event.preventDefault();
+		console.log(`Right-clicked on group ${group}`);
+		group.icon = checkIcon(group.icon);
+		setGroupName(group.name);
+		setSelectedGroup(group);
+		modal.openModal();
+	};
 
- const startHoldTimer = (group) => {
+	const startHoldTimer = (group) => {
 		const timer = setTimeout(() => {
 			setSelectedGroup(group);
-
-		}, 1000); 
+		}, 1000);
 		setHoldTimer(timer);
 		modal.openModal();
- };
+	};
 
- const clearHoldTimer = () => {
+	const clearHoldTimer = () => {
 		clearTimeout(holdTimer);
 		setHoldTimer(null);
- };
+	};
 
-// update group
-const updateGroup = async (event) => {
-	event.preventDefault();
-	if (groupName.trim() === "") {
-		alert("Enter a valid group name");
-		return;
-	}
-	setLoading(true);
-	const { uid } = auth.currentUser;
+	// update group
+	const updateGroup = async (event) => {
+		event.preventDefault();
+		if (groupName.trim() === "") {
+			alert("Enter a valid group name");
+			return;
+		}
+		setLoading(true);
+		const { uid } = auth.currentUser;
 
-	const groupRef = collection(db, "groups");
-	const queryRef = query(groupRef, where("name", "==", groupName));
-	const querySnapshot = await getDocs(queryRef);
+		const groupRef = collection(db, "groups");
+		const queryRef = query(groupRef, where("name", "==", groupName));
+		const querySnapshot = await getDocs(queryRef);
 
-	if (!querySnapshot.empty) {
-		alert("Group name already exists");
-		setLoading(false);
-		return;
-	}
+		if (!querySnapshot.empty) {
+			alert("Group name already exists");
+			setLoading(false);
+			return;
+		}
 
-	try {
-		const groupDocRef = doc(db, "groups", selectedGroup.id);
-		const updateData = {
-			name: groupName,
-			icon: selectedGroup.icon.iconName,
-		};
+		try {
+			const groupDocRef = doc(db, "groups", selectedGroup.id);
+			const updateData = {
+				name: groupName,
+				icon: selectedGroup.icon.iconName,
+			};
 
-		await updateDoc(groupDocRef, updateData);
-		setLoading(false);
-		setOpen(false);
-		modal.closeModal();
-	} catch (err) {
-		console.log(err);
-		setLoading(false);
-	}
-};
-// delete
-  const deleteGroup = async (id) => {
+			await updateDoc(groupDocRef, updateData);
+			setLoading(false);
+			setOpen(false);
+			modal.closeModal();
+		} catch (err) {
+			console.log(err);
+			setLoading(false);
+		}
+	};
+	// delete
+	const deleteGroup = async (id) => {
 		try {
 			setLoading(true);
 			await deleteDoc(doc(db, "groups", id));
@@ -151,15 +149,21 @@ const updateGroup = async (event) => {
 			setLoading(false);
 			console.log(err);
 		}
-  };
-  return (
+	};
+
+	const handleClose = () => {
+		setSelectedGroup(null);
+		setGroupName("");
+		modal.closeModal();
+	};
+
+	return (
 		<>
 			<div className="flex flex-col space-y-3">
 				{data.map((group) => (
 					<Link
 						to={`/chat?groupId=${group.id}`}
 						key={group.id}
-						className="z-0"
 						onContextMenu={(event) =>
 							handleRightClick(event, group)
 						}
@@ -178,7 +182,7 @@ const updateGroup = async (event) => {
 			{selectedGroup && (
 				<Modal
 					show={modal.isOpen}
-					handleClose={modal.closeModal}
+					handleClose={handleClose}
 					title="Group Information"
 					loading={loading}
 					handleSubmit={updateGroup}>
@@ -218,7 +222,7 @@ const updateGroup = async (event) => {
 				</Modal>
 			)}
 		</>
-  );
+	);
 };
 
 const ChooseIcon = ({ open, onSelect }) => {
@@ -230,7 +234,7 @@ const ChooseIcon = ({ open, onSelect }) => {
 		faBriefcase,
 		faSchool,
 	];
-	
+
 	return (
 		<div
 			className={`${
@@ -243,9 +247,7 @@ const ChooseIcon = ({ open, onSelect }) => {
 							key={icon.iconName}
 							icon={icon}
 							className="text-3xl cursor-pointer hover:scale-125 transform transition-all duration-300 hover:text-blue-600"
-							onClick={() =>
-								onSelect(icon)
-							}
+							onClick={() => onSelect(icon)}
 						/>
 					))}
 				</div>
@@ -372,7 +374,6 @@ const ChatHome = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user, authLoad]);
 
-
 	if (authLoad || loading) {
 		return (
 			<div className="flex justify-center items-center h-[69vh]">
@@ -391,7 +392,7 @@ const ChatHome = () => {
 
 	return (
 		<>
-			<div className="flex flex-col items-center justify-start h-[640px] bg-gray-100">
+			<div className="flex flex-col items-center justify-start h-[640px] bg-slate-200 dark:bg-gray-900">
 				<div className="header min-w-full">
 					<h1 className="text-3xl font-bold mb-4 text-center mt-3">
 						Create a New Group
@@ -400,12 +401,12 @@ const ChatHome = () => {
 					<div className="flex justify-center items-center">
 						<button
 							onClick={handleCreateModal.openModal}
-							className="btn bg-blue-600 text-white px-4 py-2 rounded-lg">
+							className="btn bg-gray-700 text-white px-4 py-2 rounded-lg ">
 							Create Group
 						</button>
 					</div>
 				</div>
-				<div className="body p-4 w-[400px] md:w-[700px] lg:w-[1200px]">
+				<div className="body p-4 w-full md:w-[700px] lg:w-[1100px]">
 					{loading ? (
 						<>
 							<div className="flex justify-center items-center h-[69vh]">
@@ -413,9 +414,7 @@ const ChatHome = () => {
 							</div>
 						</>
 					) : (
-						<Groups
-							data={groups}
-						/>
+						<Groups data={groups} />
 					)}
 				</div>
 				{/* modal */}
