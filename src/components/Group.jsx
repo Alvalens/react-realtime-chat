@@ -1,6 +1,14 @@
 // components
-import { Avatar, Badge } from "react-daisyui";
+import { Badge } from "react-daisyui";
 import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
+import { faBomb } from "@fortawesome/free-solid-svg-icons";
+import { faCode } from "@fortawesome/free-solid-svg-icons";
+import { faMugHot } from "@fortawesome/free-solid-svg-icons";
+import { faPoo } from "@fortawesome/free-solid-svg-icons";
+import { faBriefcase } from "@fortawesome/free-solid-svg-icons";
+import { faSchool } from "@fortawesome/free-solid-svg-icons";
 
 const GroupName = ({ name, user, msg }) => {
 	return (
@@ -8,12 +16,13 @@ const GroupName = ({ name, user, msg }) => {
 			<p className="text-xl text-slate-800 font-medium">{name}</p>
 			{/* last message */}
 			<p className="text-xs text-gray-500">
-				{ user ? (
+				{user ? (
 					<>
-					<span className="font-bold">{user}: </span> {msg}
+						<span className="font-bold">{user}: </span> {msg}
 					</>
-				) :
-					(<span className="font-bold">No Messages Yet</span>)}
+				) : (
+					<span className="font-bold">No Messages Yet</span>
+				)}
 			</p>
 		</div>
 	);
@@ -32,19 +41,45 @@ const TotalMsg = ({ total }) => {
 	);
 };
 
-const Group = ({ name, user, msg, total }) => {
+const Group = ({ name, user, msg, total, icon }) => {
+
+	if (icon === "bomb") {
+		icon = faBomb;
+	} else if (icon === "code") {
+		icon = faCode;
+	} else if (icon === "mug-hot") {
+		icon = faMugHot;
+	} else if (icon === "poo") {
+		icon = faPoo;
+	} else if (icon === "briefcase") {
+		icon = faBriefcase;
+	} else if (icon === "school") {
+		icon = faSchool;
+	} else {
+		icon = faUserGroup;
+	}
+
+
 	return (
-		<div className="min-w-full min-h-[70px] flex justify-between items-center bg-slate-300 rounded-lg px-5 py-2">
-			<div className="flex">
-				<Avatar
-					src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-					size="sm"
-					shape="circle"
-				/>
-				<GroupName name={name} user={user} msg={msg} />
+		<>
+
+			<div className="min-w-full min-h-[70px] flex justify-between items-center bg-slate-300 rounded-lg px-5 py-2">
+				<div className="flex">
+					{/* icon */}
+					<div className="flex justify-center items-center">
+						<div
+							className="bg-slate-200 rounded-full w-16 h-16 flex justify-center items-center ">
+							<FontAwesomeIcon
+								icon={icon ?? faUserGroup}
+								className={`text-2xl`}
+							/>
+						</div>
+						<GroupName name={name} user={user} msg={msg} />
+					</div>
+				</div>
+				<TotalMsg total={total} />
 			</div>
-			<TotalMsg total={total} />
-		</div>
+		</>
 	);
 };
 GroupName.propTypes = {

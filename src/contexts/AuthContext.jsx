@@ -2,7 +2,6 @@ import { useContext, createContext, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 import { signInWithRedirect, GoogleAuthProvider } from "firebase/auth";
-import Loader from "../components/Loader";
 import { useEffect } from "react";
 
 const AuthContext = createContext();
@@ -18,6 +17,7 @@ export function AuthProvider({ children }) {
 
 	const googleSignIn = async () => {
 		try {
+			setLoading(true);
 			const provider = new GoogleAuthProvider();
 			await signInWithRedirect(auth, provider);
 			if (user) {
