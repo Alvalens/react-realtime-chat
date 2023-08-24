@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
-const Modal = ({ children, title, show, handleSubmit, handleClose, loading }) => {
+const Modal = ({ children, title, show, handleSubmit, handleClose, loading, disableButton }) => {
+	console.log(disableButton);
 	return (
 		<div
 			className={
@@ -42,7 +43,8 @@ const Modal = ({ children, title, show, handleSubmit, handleClose, loading }) =>
 							</button>
 						) : (
 							<button
-								type="submit"
+								disabled={!disableButton}
+								type={`${!disableButton ? "button" : "submit"}`}
 								className="btn text-white bg-gray-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-3">
 								Save
 								<FontAwesomeIcon
@@ -64,5 +66,6 @@ Modal.propTypes = {
 	handleSubmit: PropTypes.func.isRequired,
 	handleClose: PropTypes.func.isRequired,
 	loading: PropTypes.bool.isRequired,
+	disableButton: PropTypes.bool,
 };
 export default Modal;

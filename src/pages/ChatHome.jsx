@@ -55,6 +55,16 @@ const Groups = ({ data }) => {
 	const [selectedGroup, setSelectedGroup] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [open, setOpen] = useState(false);
+	const [isCreator, setIsCreator] = useState(false);
+
+	useEffect(() => {
+		const { uid } = auth.currentUser;
+		if (selectedGroup && selectedGroup.uid === uid) {
+			setIsCreator(true);
+		} else {
+			setIsCreator(false);
+		}
+	}, [selectedGroup]);
 
 	const modal = ModalUse();
 
@@ -100,7 +110,6 @@ const Groups = ({ data }) => {
 			return;
 		}
 		setLoading(true);
-		const { uid } = auth.currentUser;
 
 		const groupRef = collection(db, "groups");
 		const queryRef = query(groupRef, where("name", "==", groupName));
@@ -156,7 +165,7 @@ const Groups = ({ data }) => {
 		setGroupName("");
 		modal.closeModal();
 	};
-
+	console.log(isCreator);
 	return (
 		<>
 			<div className="flex flex-col space-y-3">
@@ -185,9 +194,19 @@ const Groups = ({ data }) => {
 					handleClose={handleClose}
 					title="Group Information"
 					loading={loading}
-					handleSubmit={updateGroup}>
+					handleSubmit={updateGroup}
+					disableButton={isCreator}>
+					{/* creator */}
+					<span className="text-black dark:text-white">
+						<span className="font-medium text-gray-800 dark:text-gray-100">
+							Created By:{" "}
+						</span>
+						{isCreator && (selectedGroup.createdBy ?? " unknown")}
+					</span>
+					<br />
 					<label htmlFor="group_name">Name</label>
 					<input
+						disabled={!isCreator}
 						id="group_name"
 						type="text"
 						placeholder="Enter Group Name"
@@ -195,30 +214,42 @@ const Groups = ({ data }) => {
 						onChange={(e) => setGroupName(e.target.value)}
 						className="input input-bordered min-w-[100%]"
 					/>
-					<button
-						type="button"
-						onClick={openIcon}
-						className="btn text-black hover:text-white bg-gray-100 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 my-3">
-						Choose Icon
-					</button>
-					<ChooseIcon open={open} onSelect={handleIconSelect} />
-					{selectedGroup.icon && (
-						<div className="text-center bg-slate-400 max-w-[40%] p-2 rounded-lg m-auto my-2">
-							<FontAwesomeIcon
-								icon={selectedGroup.icon}
-								className="text-3xl"
+					{isCreator && (
+						<>
+							<button
+								type="button"
+								onClick={openIcon}
+								className="btn text-black hover:text-white bg-gray-100 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 my-3">
+								Choose Icon
+							</button>
+							<ChooseIcon
+								open={open}
+								onSelect={handleIconSelect}
 							/>
-							<input type="hidden" value={selectedGroup.icon} />
-						</div>
+							{selectedGroup.icon && (
+								<div className="text-center bg-slate-400 max-w-[40%] p-2 rounded-lg m-auto my-2">
+									<FontAwesomeIcon
+										icon={selectedGroup.icon}
+										className="text-3xl"
+									/>
+									<input
+										type="hidden"
+										value={selectedGroup.icon}
+									/>
+								</div>
+							)}
+							<div className="text-center">
+								<button
+									type="button"
+									className="btn text-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 my-4"
+									onClick={() =>
+										deleteGroup(selectedGroup.id)
+									}>
+									Delete Group
+								</button>
+							</div>
+						</>
 					)}
-					<div className="text-center">
-						<button
-							type="button"
-							className="btn text-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 my-4"
-							onClick={() => deleteGroup(selectedGroup.id)}>
-							Delete Group
-						</button>
-					</div>
 				</Modal>
 			)}
 		</>
@@ -270,15 +301,17 @@ const CreateModal = ({ show, handleClose }) => {
 		}
 		setLoading(true);
 		const { uid } = auth.currentUser;
+		const name = auth.currentUser.displayName;
 		await addDoc(collection(db, "groups"), {
 			name: groupName,
 			icon: selectedIcon.iconName,
+			createdBy: name,
 			createdAt: serverTimestamp(),
 			uid,
 		});
 		setGroupName("");
 		setLoading(false);
-		setOpen(false);
+		handleClose;
 	};
 
 	const openIcon = () => {
@@ -295,7 +328,8 @@ const CreateModal = ({ show, handleClose }) => {
 			show={show}
 			handleClose={handleClose}
 			handleSubmit={createGroup}
-			loading={loading}>
+			loading={loading}
+			disableButton="true">
 			<input
 				type="text"
 				placeholder="Enter Group Name"
