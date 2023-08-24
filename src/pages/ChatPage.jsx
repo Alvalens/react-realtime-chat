@@ -16,7 +16,7 @@ import Message from "../components/Message";
 import SendMessage from "../components/SendMessage";
 import Loader from "../components/Loader";
 
-const Chat = () => {
+const ChatPage = () => {
 	const { user } = useAuth();
 	const [messages, setMessages] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -80,7 +80,7 @@ const Chat = () => {
 	console.log(messages);
 	return (
 		<>
-			<div className="relative flex justify-center items-center min-w-full h-[69vh] bg-slate-200 overflow-y-scroll">
+			<div className="relative flex justify-center items-center min-w-full h-[69vh] bg-slate-200 overflow-y-scroll dark:bg-gray-900 mt-24">
 				<div className="h-[630px] w-full md:w-[700px] lg:w-[1200px] pt-11">
 					<div className="flex flex-col-reverse space-y-2">
 						{messages.map((message) => (
@@ -97,4 +97,4 @@ const Chat = () => {
 	);
 };
 
-export default Chat;
+export default ChatPage;

@@ -1,7 +1,7 @@
 const About = () => {
   return (
 		<>
-			<div className="container mx-auto bg-slate-200 dark:bg-gray-900 min-h-[50rem]">
+			<div className="container mx-auto bg-slate-200 dark:bg-gray-900 min-h-[50rem] mt-24">
 				<div className="text-center">
 					<h1 className="text-2xl">About</h1>
 					<p className="text-lg">
