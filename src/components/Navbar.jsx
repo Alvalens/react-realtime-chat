@@ -4,7 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useState, useCallback } from "react";
 
 const NavbarC = () => {
-	const { user } = useAuth();
+	const { user, logout } = useAuth();
 	const [visible, setVisible] = useState(false);
 	const toggleVisible = useCallback(() => {
 		setVisible((visible) => !visible);
@@ -91,9 +91,9 @@ const NavbarC = () => {
 							</Menu.Item>
 						</Menu>
 					</div>
-					<Navbar.End className="max-w-[41%]">
+					<Navbar.End className="max-w-[43%]">
 						{user ? (
-							<Button className="hover:bg-red-400 hover:border-gray-500 capitalize text-lg">Logout</Button>
+							<Button onClick={logout} className="hover:bg-red-400 hover:border-gray-500 capitalize text-lg">Logout</Button>
 						) : (
 							<Link to="/">
 								<Button>Login</Button>

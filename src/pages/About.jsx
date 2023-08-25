@@ -8,8 +8,6 @@ import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 import { faAddressBook } from "@fortawesome/free-solid-svg-icons";
 import { faLayerGroup } from "@fortawesome/free-solid-svg-icons";
 
-
-
 const About = () => {
 	return (
 		<>
@@ -19,7 +17,15 @@ const About = () => {
 						About This Project
 					</h1>
 					<p className="text-gray-500 dark:text-gray-300 px-2 md:px-36 pt-2">
-						This is my second React project, React Chat. This is my ambitious project because i'am still new to React JS and also this is my first time using firebase. But beside that, i'am also learning many things about react. If you want to know more about this project, you can visit <a href="http://">Github repository.</a> Also if you have any suggestion or feedback, you can contact me via social media below. Thank you for visiting my website.
+						This is my second React project, React Chat. This is my
+						ambitious project because i&rsquo;am still new to React
+						JS and also this is my first time using firebase. But
+						beside that, i&rsquo;am also learning many things about
+						react. If you want to know more about this project, you
+						can visit <a href="http://">Github repository.</a> Also
+						if you have any suggestion or feedback, you can contact
+						me via social media below. Thank you for visiting my
+						website.
 					</p>
 					{/* container 2 grid */}
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
@@ -38,13 +44,14 @@ const About = () => {
 										</span>
 									</h2>
 									<p className="text-sm text-gray-500 dark:text-gray-300 p-4 text-justify">
-										Hello! I'm Alvalens, junior fullstack
-										web developer. I'm from Indonesia. I'm
-										currently learning React JS and Node JS.
-										I'm also interested in UI/UX Design. If
-										you want to know more about me, you can
-										visit my website or contact me via
-										social.
+										Hello! I&apos;m Alvalens, junior
+										fullstack web developer. I&apos;m from
+										Indonesia. I&apos;m currently learning
+										React JS and Node JS. I&apos;m also
+										interested in UI/UX Design, Mobile and
+										AI developement. If you want to know
+										more about me, you can visit my website
+										or contact me via social.
 									</p>
 								</div>
 							</div>
