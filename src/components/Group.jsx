@@ -13,15 +13,15 @@ import { faSchool } from "@fortawesome/free-solid-svg-icons";
 const GroupName = ({ name, user, msg }) => {
 	return (
 		<div className="ml-3 py-2 flex flex-col justify-center items-start">
-			<p className="text-xl text-slate-800 font-medium">{name}</p>
+			<p className="text-xl text-slate-800 dark:text-slate-200 font-medium">{name}</p>
 			{/* last message */}
-			<p className="text-xs text-gray-500">
+			<p className="text-xs text-gray-500 dark:text-gray-300">
 				{user ? (
 					<>
 						<span className="font-bold">{user}: </span> {msg}
 					</>
 				) : (
-					<span className="font-bold">No Messages Yet</span>
+					<span className="font-bold bg-gray-500 rounded-lg">No Messages Yet</span>
 				)}
 			</p>
 		</div>
@@ -67,7 +67,7 @@ const Group = ({ name, user, msg, total, icon }) => {
 					{/* icon */}
 					<div className="flex justify-center items-center">
 						<div
-							className="bg-slate-200 rounded-full w-16 h-16 flex justify-center items-center ">
+							className="bg-slate-200 dark:bg-slate-500 dark:text-slate-200 rounded-full w-16 h-16 flex justify-center items-center ">
 							<FontAwesomeIcon
 								icon={icon ?? faUserGroup}
 								className={`text-2xl`}

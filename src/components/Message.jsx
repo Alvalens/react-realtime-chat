@@ -15,7 +15,7 @@ const Message = ({ message }) => {
 	return (
 		<>
 			{messageClass === "received" ? (
-				<ChatBubble>
+				<ChatBubble className="px-4">
 					<ChatBubble.Avatar src={avatar} />
 					<ChatBubble.Header>
 						{name} <ChatBubble.Time>{time}</ChatBubble.Time>
@@ -24,7 +24,7 @@ const Message = ({ message }) => {
 					<ChatBubble.Footer>received</ChatBubble.Footer>
 				</ChatBubble>
 			) : (
-				<ChatBubble end>
+				<ChatBubble end className="px-4">
 					<ChatBubble.Avatar src={avatar} />
 					<ChatBubble.Header>
 						{name} <ChatBubble.Time>{time}</ChatBubble.Time>

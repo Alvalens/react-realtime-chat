@@ -36,7 +36,7 @@ const Home = () => {
 				<div className="mr-auto place-self-center lg:col-span-7">
 					<div className="flex lg:mt-0 lg:col-span-5 lg:hidden">
 						<img
-							className="object-contain w-full h-72 rounded-lg lg:rounded-none lg:rounded-r-lg"
+							className="object-contain w-full h-72 rounded-lg lg:rounded-none lg:rounded-r-lg invert-0 dark:invert"
 							src={Chat}
 							alt="chat"
 						/>
@@ -46,7 +46,7 @@ const Home = () => {
 					</h1>
 					<p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
 						This is my second React project, Realtime Chat App with
-						Firebase and Tailwind CSS and Daisyui
+						Firebase, Tailwind CSS and Daisyui
 					</p>
 					{user ? (
 						<>

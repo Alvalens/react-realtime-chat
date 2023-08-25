@@ -12,7 +12,7 @@ const NavbarC = () => {
 	return (
 		<>
 			<Drawer
-				className=""
+				className="z-50"
 				open={visible}
 				onClickOverlay={toggleVisible}
 				side={

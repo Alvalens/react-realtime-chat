@@ -217,7 +217,7 @@ const Groups = ({ data }) => {
 							<button
 								type="button"
 								onClick={openIcon}
-								className="btn text-black hover:text-white bg-gray-100 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 my-3">
+								className="btn text-white bg-gray-700 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 my-3">
 								Choose Icon
 							</button>
 							<ChooseIcon
@@ -225,10 +225,10 @@ const Groups = ({ data }) => {
 								onSelect={handleIconSelect}
 							/>
 							{selectedGroup.icon && (
-								<div className="text-center bg-slate-400 max-w-[40%] p-2 rounded-lg m-auto my-2">
+								<div className="text-center bg-slate-400 dark:bg-slate-600 max-w-[40%] p-2 rounded-lg m-auto my-2">
 									<FontAwesomeIcon
 										icon={selectedGroup.icon}
-										className="text-3xl"
+										className="text-3xl dark:text-white"
 									/>
 									<input
 										type="hidden"
@@ -275,7 +275,7 @@ const ChooseIcon = ({ open, onSelect }) => {
 						<FontAwesomeIcon
 							key={icon.iconName}
 							icon={icon}
-							className="text-3xl cursor-pointer hover:scale-125 transform transition-all duration-300 hover:text-blue-600"
+							className="text-3xl dark:text-white cursor-pointer hover:scale-125 transform transition-all duration-300 hover:text-blue-600"
 							onClick={() => onSelect(icon)}
 						/>
 					))}
@@ -339,13 +339,16 @@ const CreateModal = ({ show, handleClose }) => {
 			<button
 				type="button"
 				onClick={openIcon}
-				className="btn text-black hover:text-white bg-gray-100 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 my-3">
+				className="btn text-white bg-gray-700 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 my-3">
 				Choose Icon
 			</button>
 			<ChooseIcon open={open} onSelect={handleIconSelect} />
 			{selectedIcon && (
 				<div className="text-center bg-slate-400 max-w-[40%] p-2 rounded-lg m-auto my-2">
-					<FontAwesomeIcon icon={selectedIcon} className="text-3xl" />
+					<FontAwesomeIcon
+						icon={selectedIcon}
+						className="text-3xl dark:text-white"
+					/>
 					<input type="hidden" value={selectedIcon} />
 				</div>
 			)}

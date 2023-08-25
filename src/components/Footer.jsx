@@ -29,7 +29,7 @@ function Footer () {
 							</li>
 							<li>
 								<Link
-									to="/chat"
+									to="/chat-home"
 									className="mr-4 hover:underline md:mr-6">
 									Chat
 								</Link>

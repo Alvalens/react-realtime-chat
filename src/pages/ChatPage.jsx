@@ -6,7 +6,7 @@ import {
 	onSnapshot,
 	limit,
 	where,
-	doc, 
+	doc,
 	getDoc,
 } from "firebase/firestore";
 import { db } from "../firebase";
@@ -18,12 +18,11 @@ import Message from "../components/Message";
 import SendMessage from "../components/SendMessage";
 import Loader from "../components/Loader";
 
-
-
 const ChatPage = () => {
 	const { user, loading: authLoad } = useAuth();
 	const [messages, setMessages] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const [group, setGroup] = useState(null);
 	const location = useLocation();
 	const queryParams = new URLSearchParams(location.search);
 	const groupId = queryParams.get("groupId");
@@ -36,13 +35,14 @@ const ChatPage = () => {
 		}
 
 		const groupRef = doc(db, "groups", groupId);
-
+		
 		getDoc(groupRef)
 			.then((docSnapshot) => {
 				if (!docSnapshot.exists()) {
 					alert("Group not found");
 					window.location.href = "/chat-home";
 				}
+				setGroup(docSnapshot.data());
 			})
 			.catch((error) => {
 				console.error("Error getting group document:", error);
@@ -104,31 +104,53 @@ const ChatPage = () => {
 			</div>
 		);
 	}
-
 	return (
-		<>
-			<div className="flex justify-center items-center min-w-full h-[62vh] mb-16 bg-slate-200 overflow-y-scroll dark:bg-gray-900 mt-24">
-				<div className="h-[630px] w-full md:w-[700px] lg:w-[1200px] pt-11">
-					<div className="flex flex-col-reverse space-y-2">
+		<div className="flex flex-col">
+			{/* fixed group name on mobile */}
+			<div className="fixed top-20 flex flex-col items-center justify-center w-full md:hidden bg-slate-300  dark:bg-slate-800 rounded-lg">
+				<h1 className="text-3xl font-semibold text-center">
+					{group?.name}
+				</h1>
+			</div>
+			<div className="flex justify-center items-center min-w-full h-[67vh] md:h-[62vh] mb-10 bg-slate-200 dark:bg-gray-900 mt-20 py-10 box-border">
+				{/* Group info */}
+				<div className="hidden md:flex flex-col items-center justify-center w-[24rem] border-l-white border-l-4">
+					<div className="flex flex-col items-center justify-center w-full">
+						<h1 className="text-3xl font-semibold text-center">
+							{group?.name}
+						</h1>
+						<h2 className="text-sm text-center">
+							<span className="text-gray-400">Created by: </span>
+							{group?.createdBy}
+						</h2>
+						{/* date created */}
+						<h2 className="text-sm text-center">
+							<span className="text-gray-400">Created on: </span>
+							{group?.createdAt?.toDate().toLocaleDateString()}
+						</h2>
+					</div>
+				</div>
+				<div className="flex flex-col h-[630px] w-full md:w-[700px] lg:max-w-[1200px] 2xl:w-[1600px] pt-12">
+					<div className="flex flex-col-reverse space-y-2 overflow-y-scroll">
 						{messages.map((message) => (
 							<Message key={message.id} message={message} />
 						))}
 						{messages.length === 0 && (
 							<div className="flex justify-center items-center">
-								<h1 className="text-2xl font-semibold text-center">
-									No Messages
+								<h1 className="text-2xl font-semibold text-center mt-10">
+									No Messages yet
 								</h1>
 							</div>
 						)}
 					</div>
 					<span ref={scroll}></span>
-					<div className="ml-3 fixed min-w-[100%] md:min-w-[80%]  bottom-48">
-						<SendMessage scroll={scroll} groupId={groupId} />
-					</div>
 				</div>
 			</div>
-		</>
+			<div className="ml-3 min-w-[90%] md:px-24 box-border">
+				<SendMessage scroll={scroll} groupId={groupId} />
+			</div>
+		</div>
 	);
-};
+}
 
 export default ChatPage;
