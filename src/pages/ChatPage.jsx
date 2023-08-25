@@ -12,7 +12,6 @@ import {
 import { db } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
 import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
 
 // components
 import Message from "../components/Message";
@@ -50,17 +49,17 @@ const ChatPage = () => {
 			});
 	}, [groupId, user]);
 
-	useEffect(() => {		
-
+	useEffect(() => {
 		if (authLoad || !user) {
 			setLoading(false);
 			return;
 		}
 		setLoading(true);
+
 		const q = query(
 			collection(db, "messages"),
 			where("groupId", "==", groupId),
-			orderBy("createdAt", "desc"),
+			orderBy("createdAt", "desc"), // Keep the descending order
 			limit(30)
 		);
 
@@ -69,12 +68,14 @@ const ChatPage = () => {
 			QuerySnapshot.forEach((doc) => {
 				fetchedMessages.push({ ...doc.data(), id: doc.id });
 			});
-			const sortedMessages = fetchedMessages.sort(
-				(a, b) => b.createdAt - a.createdAt
-			);
+
+			// Reverse the order of fetched messages before setting state
+			const sortedMessages = fetchedMessages;
+
 			setMessages(sortedMessages);
 			setLoading(false);
 		});
+
 		return () => unsubscribe();
 	}, [user, groupId, authLoad]);
 

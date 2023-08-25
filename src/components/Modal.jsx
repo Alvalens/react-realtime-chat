@@ -4,7 +4,6 @@ import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
 const Modal = ({ children, title, show, handleSubmit, handleClose, loading, disableButton }) => {
-	console.log(disableButton);
 	return (
 		<div
 			className={

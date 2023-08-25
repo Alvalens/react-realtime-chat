@@ -195,11 +195,11 @@ const Groups = ({ data }) => {
 					handleSubmit={updateGroup}
 					disableButton={isCreator}>
 					{/* creator */}
-					<span className="text-black dark:text-white">
-						<span className="font-medium text-gray-800 dark:text-gray-100">
+					<span className="text-gray-700 text-sm dark:text-white">
+						<span className="font-medium text-gray-500 dark:text-gray-100">
 							Created By:{" "}
 						</span>
-						{isCreator && (selectedGroup.createdBy ?? " unknown")}
+						{selectedGroup.createdBy ?? " unknown"}
 					</span>
 					<br />
 					<label htmlFor="group_name">Name</label>
@@ -302,14 +302,14 @@ const CreateModal = ({ show, handleClose }) => {
 		const name = auth.currentUser.displayName;
 		await addDoc(collection(db, "groups"), {
 			name: groupName,
-			icon: selectedIcon.iconName,
+			icon: selectedIcon.iconName ?? "user-group",
 			createdBy: name,
 			createdAt: serverTimestamp(),
 			uid,
 		});
 		setGroupName("");
 		setLoading(false);
-		handleClose;
+		handleClose();
 	};
 
 	const openIcon = () => {
@@ -360,7 +360,6 @@ const ChatHome = () => {
 
 	// modal init
 	const handleCreateModal = ModalUse();
-
 	// get groups
 	useEffect(() => {
 		if (authLoad || !user) {
@@ -436,11 +435,15 @@ const ChatHome = () => {
 				</div>
 				<div className="body p-4 w-full md:w-[700px] lg:w-[1100px]">
 					{loading ? (
-						<>
-							<Loader />
-						</>
-					) : (
+						<Loader />
+					) : groups.length > 0 ? ( 
 						<Groups data={groups} />
+					) : (
+						<div className="flex justify-center min-h-[32rem] items-center">
+							<h1 className="text-2xl font-semibold text-center">
+								No Groups yet
+							</h1>
+						</div>
 					)}
 				</div>
 				{/* modal */}

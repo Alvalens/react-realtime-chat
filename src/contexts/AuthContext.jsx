@@ -1,7 +1,7 @@
 import { useContext, createContext, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
-import { signInWithRedirect, GoogleAuthProvider } from "firebase/auth";
+import { signInWithRedirect, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
 import { useEffect } from "react";
 
 const AuthContext = createContext();
@@ -30,6 +30,22 @@ export function AuthProvider({ children }) {
 			setLoading(false);
 		}
 	};
+
+	const githubSignIn = async () => {
+		try {
+			setLoading(true);
+			const provider = new GithubAuthProvider();
+			await signInWithRedirect(auth, provider);
+			if (user) {
+				setLoading(false);
+			}
+		} catch (err) {
+			alert(err.message);
+			console.log(err);
+		} finally {
+			setLoading(false);
+		}
+	};
 	useEffect(() => {
 		if (user) {
 			setLoading(false);
@@ -44,6 +60,7 @@ export function AuthProvider({ children }) {
 		try{
 			setLoading(true);
 			auth.signOut();
+			window.location.href = "/";
 		} catch (err) {
 			console.log(err);
 		} finally {
@@ -54,6 +71,7 @@ export function AuthProvider({ children }) {
 	const authContextValue = {
 		user,
 		googleSignIn,
+		githubSignIn,
 		logout,
 		loading,
 	};
