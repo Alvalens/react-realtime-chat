@@ -47,9 +47,9 @@ You can access these pages after you login with google or github in the home pag
 ### Chat Home
 
 * Create a new group: ou can start chatting once you had a group or there a listed group in chat home page.
-* Editing group info: By holding or right click a group you can change name or icon to your group `you only can edit your own group info.`
+* Editing group info: By holding or right click a group you can change name or icon to your group `you can only edit your own group info.`
 * Delete group: you can also delete your own group and messages stored there.
-* Join group chat: join group by simpely clicking the group.
+* Join group chat: join group by simply clicking the group.
 
 ### Chat Page
 
@@ -63,4 +63,4 @@ Contributions are welcome! If you find any issues or have suggestions, feel free
 
 ## License
 
-This project is licensed under the MIT License seethe [LICENSE](LICENSE) file for details.
+This project is licensed under the GPL-3.0 License seethe [LICENSE](LICENSE) file for details.
