@@ -2,38 +2,39 @@
 
 ![visitor badge](https://visitor-badge.laobi.icu/badge?page_id=re.visitor-badge)
 
-React Tools is a project that provides a collection of tools and components built using popular technologies like React, React Router, and TailwindCSS. Also this project implement browser local storage so it didnt need any databases. React Tools offers features such as a Todo List, Note-taking, and Expense Tracking. This project is also my first react project. If you find any bugs please contact me, I'll try my best to fix it.
+Experience the power of real-time communication with the Realtime Group Chat WebApp – my ambitious project that delves into the world of interactive web development using React. As my second major project, this venture is aimed at expanding my skill setand learning new concepts within the realm of React and real-time applications. If you find any bugs or have suggestion just contact me!
 
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase) ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white) ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white) ![DaisyUI](https://img.shields.io/badge/daisyui-5A0EF8?style=for-the-badge&logo=daisyui&logoColor=white)
 
 ## Features
 
-* **Create Group:** Create a group before chatting in realtime!
+* **Group:** Create a group before chatting in realtime!
 * **Chat Room:** Engage in real-time conversations with others in a user-friendly chat interface.
 * **User Authentication:** Securely access the chat room with user authentication.
 
 ## Installation
 
 1. Ensure you have [pnpm](https://pnpm.io/) installed. If not, you can install it using:
+
    ```shell
-     npm install -g pnpm
+   npm install -g pnpm
    ```
 2. Clone the repository:
+
    ```shell
    git clone https://github.com/Alvalens/react-realtime-chat.git
    ```
-
-2. Navigate to the project directory:
+3. Navigate to the project directory:
 
    ```shell
    cd react-realtime-chat
    ```
-3. Install dependencies:
+4. Install dependencies:
 
    ```
    pnpm install
    ```
-4. Start the development server
+5. Start the development server
 
    ```shell
    pnpm run dev
