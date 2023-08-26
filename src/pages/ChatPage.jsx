@@ -130,7 +130,7 @@ const ChatPage = () => {
 						</h2>
 					</div>
 				</div>
-				<div className="flex flex-col h-[630px] w-full md:w-[700px] lg:max-w-[1200px] 2xl:w-[1600px] pt-12">
+				<div className="chat-container flex flex-col h-[630px] w-full md:w-[700px] lg:max-w-[1200px] 2xl:w-[1600px] pt-12">
 					<div className="flex flex-col-reverse space-y-2 overflow-y-scroll py-14 md:py-4">
 						{messages.map((message) => (
 							<Message key={message.id} message={message} />
