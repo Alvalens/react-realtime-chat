@@ -19,10 +19,9 @@ React Tools is a project that provides a collection of tools and components buil
      npm install -g pnpm
    ```
 2. Clone the repository:
-
-```shell
-git clone https://github.com/Alvalens/react-realtime-chat.git
-```
+   ```shell
+   git clone https://github.com/Alvalens/react-realtime-chat.git
+   ```
 
 2. Navigate to the project directory:
 
