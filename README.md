@@ -41,7 +41,7 @@ React Tools is a project that provides a collection of tools and components buil
 
 ## Usage
 
-You can access these menu on home page on the navbar, feauture section and footer. You can also access those feauture by direclt type the url `/todo` `/note` and `/expense-tracker`.
+You can access these pages after you login with google or github in the home page
 
 ### Chat Home
 
