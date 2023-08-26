@@ -1,6 +1,6 @@
 # React Tools
 
-![visitor badge](https://visitor-badge.laobi.icu/badge?page_id=react-chat.visitor-badge)
+![visitor badge](https://visitor-badge.laobi.icu/badge?page_id=re.visitor-badge)
 
 React Tools is a project that provides a collection of tools and components built using popular technologies like React, React Router, and TailwindCSS. Also this project implement browser local storage so it didnt need any databases. React Tools offers features such as a Todo List, Note-taking, and Expense Tracking. This project is also my first react project. If you find any bugs please contact me, I'll try my best to fix it.
 
