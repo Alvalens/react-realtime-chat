@@ -21,6 +21,7 @@ import Loader from "../components/Loader";
 import Group from "../components/Group";
 import Modal from "../components/Modal";
 import ModalUse from "../components/ModalUse";
+import { Tooltip } from "react-daisyui";
 // icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBomb } from "@fortawesome/free-solid-svg-icons";
@@ -30,6 +31,7 @@ import { faPoo } from "@fortawesome/free-solid-svg-icons";
 import { faBriefcase } from "@fortawesome/free-solid-svg-icons";
 import { faSchool } from "@fortawesome/free-solid-svg-icons";
 import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 
 const checkIcon = (icon) => {
 	if (icon === "bomb") {
@@ -90,7 +92,9 @@ const Groups = ({ data }) => {
 
 	const startHoldTimer = (group) => {
 		const timer = setTimeout(() => {
-			setSelectedGroup(group);
+					group.icon = checkIcon(group.icon);
+					setGroupName(group.name);
+					setSelectedGroup(group);
 		}, 1000);
 		setHoldTimer(timer);
 		modal.openModal();
@@ -428,10 +432,24 @@ const ChatHome = () => {
 		<>
 			<div className="flex flex-col items-center justify-start h-[640px] bg-slate-200 dark:bg-gray-900 mt-24">
 				<div className="header min-w-full">
+					<div className="flex justify-center items-center">
 					<h1 className="text-3xl font-bold mb-4 text-gray-700 text-center mt-3 dark:text-gray-200">
 						Create a New Group
 					</h1>
-					{/* search and create button */}
+					{/* tips icon */}
+						<div>
+							<Tooltip color="blue" position="bottom" message="Hold Group for more information">
+							<button
+								type="button"
+								className="btn bg-gray-700 text-white rounded-lg ml-3"
+								id="options-menu"
+								aria-haspopup="true"
+								aria-expanded="true">
+								<FontAwesomeIcon icon={faInfoCircle} />
+							</button>
+							</Tooltip>
+						</div>
+					</div>
 					<div className="flex justify-center items-center">
 						<button
 							onClick={handleCreateModal.openModal}

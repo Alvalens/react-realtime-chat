@@ -8,7 +8,7 @@ export function useTheme() {
 }
 
 export function ThemeProvider({ children }) {
-	const [Dark, setDark] = useState(localStorage.getItem("Dark") === "true");
+	const [Dark, setDark] = useState(localStorage.getItem("Dark") === "true" ? true : false);
 
 	const toggleDark = () => {
 		const newDark = !Dark;

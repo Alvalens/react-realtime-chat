@@ -107,8 +107,8 @@ const ChatPage = () => {
 	return (
 		<div className="flex flex-col">
 			{/* fixed group name on mobile */}
-			<div className="fixed z-10 top-20 flex flex-col items-center justify-center w-full md:hidden bg-slate-300 bg-opacity-20 backdrop-filter backdrop-blur-sm dark:bg-slate-800 rounded-lg">
-				<h1 className="text-3xl font-semibold text-center">
+			<div className="fixed z-10 top-20 flex flex-col items-center justify-center w-full md:hidden bg-slate-300  backdrop-filter backdrop-blur-sm dark:bg-slate-700 bg-opacity-20 rounded-lg">
+				<h1 className="text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
 					{group?.name}
 				</h1>
 			</div>
