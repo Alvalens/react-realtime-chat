@@ -107,7 +107,7 @@ const ChatPage = () => {
 	return (
 		<div className="flex flex-col">
 			{/* fixed group name on mobile */}
-			<div className="fixed top-20 flex flex-col items-center justify-center w-full md:hidden bg-slate-300  dark:bg-slate-800 rounded-lg">
+			<div className="fixed z-10 top-20 flex flex-col items-center justify-center w-full md:hidden bg-slate-300 bg-opacity-20 backdrop-filter backdrop-blur-sm dark:bg-slate-800 rounded-lg">
 				<h1 className="text-3xl font-semibold text-center">
 					{group?.name}
 				</h1>
@@ -131,13 +131,13 @@ const ChatPage = () => {
 					</div>
 				</div>
 				<div className="flex flex-col h-[630px] w-full md:w-[700px] lg:max-w-[1200px] 2xl:w-[1600px] pt-12">
-					<div className="flex flex-col-reverse space-y-2 overflow-y-scroll">
+					<div className="flex flex-col-reverse space-y-2 overflow-y-scroll py-14 md:py-4">
 						{messages.map((message) => (
 							<Message key={message.id} message={message} />
 						))}
 						{messages.length === 0 && (
 							<div className="flex justify-center items-center">
-								<h1 className="text-2xl font-semibold text-center mt-10">
+								<h1 className="text-2xl font-semibold text-center mt-10 bg-gray-700 dark:bg-gray-500 rounded-lg px-2 py-1">
 									No Messages yet
 								</h1>
 							</div>
@@ -146,7 +146,7 @@ const ChatPage = () => {
 					<span ref={scroll}></span>
 				</div>
 			</div>
-			<div className="ml-3 min-w-[90%] md:px-24 box-border">
+			<div className="ml-3 min-w-[90%] md:px-24 box-border z-10">
 				<SendMessage scroll={scroll} groupId={groupId} />
 			</div>
 		</div>

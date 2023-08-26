@@ -15,7 +15,7 @@ const Message = ({ message }) => {
 	return (
 		<>
 			{messageClass === "received" ? (
-				<ChatBubble className="px-4">
+				<ChatBubble className="px-4 z-0">
 					<ChatBubble.Avatar src={avatar} />
 					<ChatBubble.Header>
 						{name} <ChatBubble.Time>{time}</ChatBubble.Time>
@@ -24,7 +24,7 @@ const Message = ({ message }) => {
 					<ChatBubble.Footer>received</ChatBubble.Footer>
 				</ChatBubble>
 			) : (
-				<ChatBubble end className="px-4">
+				<ChatBubble end className="px-4 z-0">
 					<ChatBubble.Avatar src={avatar} />
 					<ChatBubble.Header>
 						{name} <ChatBubble.Time>{time}</ChatBubble.Time>
@@ -47,7 +47,7 @@ Message.propTypes = {
 			seconds: PropTypes.number.isRequired,
 			nanoseconds: PropTypes.number.isRequired,
 			toDate: PropTypes.func.isRequired,
-		}).isRequired,
+		}),
 	}).isRequired,
 };
 

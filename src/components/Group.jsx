@@ -21,7 +21,7 @@ const GroupName = ({ name, user, msg }) => {
 						<span className="font-bold">{user}: </span> {msg}
 					</>
 				) : (
-					<span className="font-bold bg-gray-500 rounded-lg">No Messages Yet</span>
+					<span className="font-bold">No Messages Yet</span>
 				)}
 			</p>
 		</div>

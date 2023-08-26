@@ -16,12 +16,15 @@ const NavbarC = () => {
 				open={visible}
 				onClickOverlay={toggleVisible}
 				side={
+					// project
 					<Menu className="p-4 w-60 md:w-80 h-full bg-base-200 z-50">
-						{/* title */}
+						<Menu.Title className="py-3 text-gray-700 dark:text-gray-200 text-2xl">
+							React Chat
+							<hr className="mt-3 text-gray-900 dark:text-gray-100" />
+						</Menu.Title>
 						<Menu.Title className=" text-gray-400 text-xl">
 							Menu
 						</Menu.Title>
-
 						<Menu.Item>
 							<Link
 								to={"/"}
