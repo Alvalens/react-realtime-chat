@@ -56,6 +56,7 @@ const SendMessage = ({scroll, groupId}) => {
 							icon={faCircleNotch}
 							className="animate-spin"
 						/>
+						Send
 					</button>
 				) : (
 					<button
