@@ -107,10 +107,29 @@ const ChatPage = () => {
 	return (
 		<div className="flex flex-col">
 			{/* fixed group name on mobile */}
-			<div className="fixed z-10 top-20 flex flex-col items-center justify-center w-full md:hidden bg-slate-300  backdrop-filter backdrop-blur-sm dark:bg-slate-700 bg-opacity-20 rounded-lg">
-				<h1 className="text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
-					{group?.name}
-				</h1>
+			<div className="fixed z-10 top-20 flex flex-col items-center justify-center w-full md:hidden bg-slate-300  backdrop-filter backdrop-blur-sm  bg-opacity-20 rounded-lg">
+				<div className="relative min-w-full flex justify-center items-center">
+					<button
+						className=" absolute left-0 text-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center active:scale-50  mr-3"
+						onClick={() => window.history.back()}>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							className="h-6 w-6 text-gray-700 dark:text-gray-200"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor">
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth={2}
+								d="M10 19l-7-7m0 0l7-7m-7 7h18"
+							/>
+						</svg>
+					</button>
+					<h1 className="text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
+						{group?.name}
+					</h1>
+				</div>
 			</div>
 			<div className="flex justify-center items-center min-w-full h-[67vh] md:h-[62vh] mb-10 bg-slate-200 dark:bg-gray-900 mt-20 py-10 box-border">
 				{/* Group info */}
@@ -129,6 +148,25 @@ const ChatPage = () => {
 							{group?.createdAt?.toDate().toLocaleDateString()}
 						</h2>
 					</div>
+					{/* back button */}
+					<button
+						className="btn capitalize text-lg text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 mt-5"
+						onClick={() => window.history.back()}>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							className="h-6 w-6 mr-2"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor">
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth={2}
+								d="M10 19l-7-7m0 0l7-7m-7 7h18"
+							/>
+						</svg>
+						Go Back
+					</button>
 				</div>
 				<div className="chat-container flex flex-col h-[630px] w-full md:w-[700px] lg:max-w-[1200px] 2xl:w-[1600px] pt-12">
 					<div className="flex flex-col-reverse space-y-2 overflow-y-scroll py-14 md:py-4">
@@ -137,7 +175,7 @@ const ChatPage = () => {
 						))}
 						{messages.length === 0 && (
 							<div className="flex justify-center items-center">
-								<h1 className="text-2xl font-semibold text-center mt-10 bg-gray-700 dark:bg-gray-500 rounded-lg px-2 py-1">
+								<h1 className="text-2xl font-semibold text-center mt-10 bg-gray-700 dark:bg-gray-500 text-gray-200 rounded-lg px-2 py-1">
 									No Messages yet
 								</h1>
 							</div>

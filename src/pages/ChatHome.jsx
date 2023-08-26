@@ -438,7 +438,7 @@ const ChatHome = () => {
 					</h1>
 					{/* tips icon */}
 						<div>
-							<Tooltip color="blue" position="left" message="Hold Group for more information">
+							<Tooltip color="blue" position="left" message="Hold or right click Group for more information">
 							<button
 								type="button"
 								className="btn bg-gray-700 text-white rounded-lg ml-3"
