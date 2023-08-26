@@ -116,16 +116,16 @@ const ChatPage = () => {
 				{/* Group info */}
 				<div className="hidden md:flex flex-col items-center justify-center w-[24rem] border-l-white border-l-4">
 					<div className="flex flex-col items-center justify-center w-full">
-						<h1 className="text-3xl font-semibold text-center">
+						<h1 className="text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
 							{group?.name}
 						</h1>
-						<h2 className="text-sm text-center">
-							<span className="text-gray-400">Created by: </span>
+						<h2 className="text-sm text-center dark:text-gray-300">
+							<span className="text-gray-400 ">Created by: </span>
 							{group?.createdBy}
 						</h2>
 						{/* date created */}
-						<h2 className="text-sm text-center">
-							<span className="text-gray-400">Created on: </span>
+						<h2 className="text-sm text-center dark:text-gray-300">
+							<span className="text-gray-400 ">Created on: </span>
 							{group?.createdAt?.toDate().toLocaleDateString()}
 						</h2>
 					</div>

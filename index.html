@@ -1,8 +1,19 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script defer>
+    // Add an event listener to ensure the script runs before page load
+    document.addEventListener("DOMContentLoaded", function () {
+      /* get the darkMode on local if true set bgcolor to dark */
+      if (localStorage.getItem("Dark") === "true") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    });
+  </script>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/chat.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>React Chat</title>
   </head>

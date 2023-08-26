@@ -1,8 +1,7 @@
-import { useContext, createContext, useState } from "react";
+import { useContext, createContext, useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 import { signInWithRedirect, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
-import { useEffect } from "react";
 
 const AuthContext = createContext();
 

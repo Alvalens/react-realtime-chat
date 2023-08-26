@@ -195,14 +195,18 @@ const Groups = ({ data }) => {
 					handleSubmit={updateGroup}
 					disableButton={isCreator}>
 					{/* creator */}
-					<span className="text-gray-700 text-sm dark:text-white">
-						<span className="font-medium text-gray-500 dark:text-gray-100">
+					<span className="text-gray-700 text-sm dark:text-gray-300">
+						<span className="font-medium text-gray-500 dark:text-gray-400">
 							Created By:{" "}
 						</span>
 						{selectedGroup.createdBy ?? " unknown"}
 					</span>
 					<br />
-					<label htmlFor="group_name">Name</label>
+					<label
+						htmlFor="group_name"
+						className="text-gray-800 dark:text-gray-200 mt-3">
+						Group Name
+					</label>
 					<input
 						disabled={!isCreator}
 						id="group_name"
@@ -424,7 +428,7 @@ const ChatHome = () => {
 		<>
 			<div className="flex flex-col items-center justify-start h-[640px] bg-slate-200 dark:bg-gray-900 mt-24">
 				<div className="header min-w-full">
-					<h1 className="text-3xl font-bold mb-4 text-center mt-3">
+					<h1 className="text-3xl font-bold mb-4 text-gray-700 text-center mt-3 dark:text-gray-200">
 						Create a New Group
 					</h1>
 					{/* search and create button */}

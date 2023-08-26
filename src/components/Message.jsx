@@ -17,11 +17,13 @@ const Message = ({ message }) => {
 			{messageClass === "received" ? (
 				<ChatBubble className="px-4 z-0">
 					<ChatBubble.Avatar src={avatar} />
-					<ChatBubble.Header>
+					<ChatBubble.Header className="text-gray-800 dark:text-gray-200">
 						{name} <ChatBubble.Time>{time}</ChatBubble.Time>
 					</ChatBubble.Header>
 					<ChatBubble.Message>{text}</ChatBubble.Message>
-					<ChatBubble.Footer>received</ChatBubble.Footer>
+					<ChatBubble.Footer className="text-gray-800 dark:text-gray-200">
+						received
+					</ChatBubble.Footer>
 				</ChatBubble>
 			) : (
 				<ChatBubble end className="px-4 z-0">

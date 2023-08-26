@@ -12,7 +12,7 @@ const Modal = ({ children, title, show, handleSubmit, handleClose, loading, disa
 			<form onSubmit={handleSubmit}>
 				<div className="modals-content bg-gray-200 dark:bg-gray-700 w-96 rounded-lg shadow-lg">
 					<div className="modals-header px-4 py-2  rounded-t-lg flex justify-between items-center border-b border-gray-500">
-						<h4 className="modals-title text-lg font-semibold">
+						<h4 className="modals-title text-lg font-semibold text-gray-800 dark:text-gray-200">
 							{title}
 						</h4>
 						<button
