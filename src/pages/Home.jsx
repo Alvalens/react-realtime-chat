@@ -31,9 +31,9 @@ const Home = () => {
 	// 	window.alert("This feature is not available yet");
 	// }
 	return (
-		<section className="flex justify-center items-center bg-slate-200 dark:bg-gray-900 min-h-[50rem] mt-24">
+		<section className="flex justify-center items-center bg-slate-200 dark:bg-gray-900 min-h-[50rem] mt-20">
 			<div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-				<div className="mr-auto place-self-center lg:col-span-7">
+				<div className="mr-auto place-self-center lg:col-span-7 px-3">
 					<div className="flex lg:mt-0 lg:col-span-5 lg:hidden">
 						<img
 							className="object-contain w-full h-72 rounded-lg lg:rounded-none lg:rounded-r-lg invert-0 dark:invert"
@@ -52,7 +52,7 @@ const Home = () => {
 						<>
 							<button
 								onClick={logout}
-								className="btn capitalize inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-gray-700 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+								className="btn capitalize inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
 								Logout
 							</button>
 							<Link
@@ -62,27 +62,50 @@ const Home = () => {
 							</Link>
 						</>
 					) : (
-						<div>
-							<button
-								onClick={googleSignIn}
-								className="btn capitalize inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-gray-900 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 mr-2">
-								<FontAwesomeIcon
-									icon={faGoogle}
-									className="mr-2"
-								/>{" "}
-								Login with Google
-							</button>
+						<>
+							<div className="hidden sm:block">
+								<button
+									onClick={googleSignIn}
+									className="btn capitalize inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 mr-2">
+									<FontAwesomeIcon
+										icon={faGoogle}
+										className="mr-2"
+									/>{" "}
+									Login with Google
+								</button>
 
-							<button
-								className="btn capitalize inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-gray-900 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-								onClick={githubSignIn}>
-								<FontAwesomeIcon
-									icon={faGithub}
-									className="mr-2"
-								/>{" "}
-								Login with Github
-							</button>
-						</div>
+								<button
+									className="btn capitalize inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+									onClick={githubSignIn}>
+									<FontAwesomeIcon
+										icon={faGithub}
+										className="mr-2"
+									/>{" "}
+									Login with Github
+								</button>
+							</div>
+							<div className="block sm:hidden">
+								<button
+									onClick={googleSignIn}
+									className="btn capitalize inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 mr-2">
+									<FontAwesomeIcon
+										icon={faGoogle}
+										className="mr-2"
+									/>{" "}
+									Google
+								</button>
+
+								<button
+									className="btn capitalize inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+									onClick={githubSignIn}>
+									<FontAwesomeIcon
+										icon={faGithub}
+										className="mr-2"
+									/>{" "}
+									Github
+								</button>
+							</div>
+						</>
 					)}
 				</div>
 				<div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
