@@ -41,16 +41,17 @@ const Modal = ({ children, title, show, handleSubmit, handleClose, loading, disa
 								/>
 							</button>
 						) : (
+							(disableButton &&
 							<button
 								disabled={!disableButton}
 								type={`${!disableButton ? "button" : "submit"}`}
-								className="btn text-black hover:text-white bg-gray-100 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center dark:bg-gray-300 dark:hover:bg-gray-700 dark:focus:ring-gray-800 ml-3">
+								className="btn text-black hover:text-white bg-gray-100 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center dark:bg-gray-300 dark:hover:bg-gray-700 dark:focus:ring-gray-800 ml-3 disabled:text-gray-600">
 								Save
 								<FontAwesomeIcon
 									icon={faPaperPlane}
 									className="ml-2"
 								/>
-							</button>
+							</button>)
 						)}
 					</div>
 				</div>

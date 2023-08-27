@@ -55,10 +55,10 @@ const Groups = ({ data }) => {
 	const [holdTimer, setHoldTimer] = useState(null);
 	const [groupName, setGroupName] = useState("");
 	const [selectedGroup, setSelectedGroup] = useState(null);
+	const [selectedIcon, setSelectedIcon] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [open, setOpen] = useState(false);
 	const [isCreator, setIsCreator] = useState(false);
-
 	useEffect(() => {
 		const { uid } = auth.currentUser;
 		if (selectedGroup && selectedGroup.uid === uid) {
@@ -74,27 +74,21 @@ const Groups = ({ data }) => {
 		setOpen(!open);
 	};
 
-	const handleIconSelect = (icon) => {
-		setSelectedGroup((prevGroup) => ({
-			...prevGroup,
-			icon: icon,
-		}));
+	const handleIconSelect = (iconName) => {
+		setSelectedIcon(iconName);
 		setOpen(false);
 	};
-
 	const handleRightClick = (event, group) => {
 		event.preventDefault();
 		setGroupName(group.name);
 		setSelectedGroup(group);
-		setSelectedGroup(group.icon===undefined?checkIcon(group.icon):group.icon);
 		modal.openModal();
 	};
-	
+
 	const startHoldTimer = (group) => {
 		const timer = setTimeout(() => {
-					setGroupName(group.name);
-					setSelectedGroup(group);
-					setSelectedGroup(group.icon===undefined?checkIcon(group.icon):group.icon);
+			setGroupName(group.name);
+			setSelectedGroup(group);
 		}, 1000);
 		setHoldTimer(timer);
 		modal.openModal();
@@ -112,36 +106,90 @@ const Groups = ({ data }) => {
 			alert("Enter a valid group name");
 			return;
 		}
+		if (!isCreator) {
+			alert("You are not the creator of this group");
+			return;
+		}
 		setLoading(true);
 
 		const groupRef = collection(db, "groups");
 		const queryRef = query(groupRef, where("name", "==", groupName));
 		const querySnapshot = await getDocs(queryRef);
-
+		// group name already exists except for the current group
 		if (!querySnapshot.empty) {
-			alert("Group name already exists");
-			setLoading(false);
-			return;
+			const doc = querySnapshot.docs[0];
+			if (doc.id !== selectedGroup.id) {
+				alert("Group name already exists");
+				setLoading(false);
+				return;
+			}
 		}
 
-		try {
-			const groupDocRef = doc(db, "groups", selectedGroup.id);
-			const updateData = {
-				name: groupName,
-				icon: selectedGroup.icon.iconName,
-			};
+		if (groupName != selectedGroup.name && selectedIcon) {
+			try {
+				const groupDocRef = doc(db, "groups", selectedGroup.id);
+				const updateData = {
+					name: groupName,
+					icon: selectedIcon.iconName ?? "user-group",
+				};
 
-			await updateDoc(groupDocRef, updateData);
+				await updateDoc(groupDocRef, updateData);
+				setLoading(false);
+				setOpen(false);
+				modal.closeModal();
+				setSelectedIcon(null);
+			} catch (err) {
+				console.log(err);
+				setLoading(false);
+			}
+		} else if (groupName == selectedGroup.name && selectedIcon) {
+			try {
+				const groupDocRef = doc(db, "groups", selectedGroup.id);
+				const updateData = {
+					icon: selectedIcon.iconName ?? "user-group",
+				};
+
+				await updateDoc(groupDocRef, updateData);
+				setLoading(false);
+				setOpen(false);
+				modal.closeModal();
+				setSelectedIcon(null);
+			} catch (err) {
+				console.log(err);
+				setLoading(false);
+			}
+		} else if (groupName != selectedGroup.name && !selectedIcon) {
+			try {
+				const groupDocRef = doc(db, "groups", selectedGroup.id);
+				const updateData = {
+					name: groupName,
+				};
+
+				await updateDoc(groupDocRef, updateData);
+				setLoading(false);
+				setOpen(false);
+				modal.closeModal();
+				setSelectedIcon(null);
+			} catch (err) {
+				console.log(err);
+				setLoading(false);
+			}
+		} else {
+			alert("No changes made");
 			setLoading(false);
 			setOpen(false);
 			modal.closeModal();
-		} catch (err) {
-			console.log(err);
-			setLoading(false);
+			setSelectedIcon(null);
 		}
+
 	};
 	// delete
 	const deleteGroup = async (id) => {
+		if (!isCreator) {
+			alert("You are not the creator of this group");
+			return;
+		}
+
 		try {
 			setLoading(true);
 			await deleteDoc(doc(db, "groups", id));
@@ -166,8 +214,10 @@ const Groups = ({ data }) => {
 	const handleClose = () => {
 		setSelectedGroup(null);
 		setGroupName("");
+		setSelectedIcon("");
 		modal.closeModal();
 	};
+
 	return (
 		<>
 			<div className="flex flex-col space-y-3">
@@ -232,16 +282,13 @@ const Groups = ({ data }) => {
 								open={open}
 								onSelect={handleIconSelect}
 							/>
-							{selectedGroup.icon && (
+							{selectedIcon && (
 								<div className="text-center bg-slate-400 dark:bg-slate-600 max-w-[40%] p-2 rounded-lg m-auto my-2">
 									<FontAwesomeIcon
-										icon={selectedGroup.icon}
+										icon={selectedIcon}
 										className="text-3xl dark:text-white"
 									/>
-									<input
-										type="hidden"
-										value={selectedGroup.icon}
-									/>
+									<input type="hidden" value={selectedIcon} />
 								</div>
 							)}
 							<div className="text-center">
@@ -433,20 +480,23 @@ const ChatHome = () => {
 			<div className="flex flex-col items-center justify-start h-[640px] bg-slate-200 dark:bg-gray-900 mt-24">
 				<div className="header min-w-full">
 					<div className="flex justify-center items-center">
-					<h1 className="text-3xl font-bold mb-4 text-gray-700 text-center mt-3 dark:text-gray-200">
-						Create a New Group
-					</h1>
-					{/* tips icon */}
+						<h1 className="text-3xl font-bold mb-4 text-gray-700 text-center mt-3 dark:text-gray-200">
+							Create a New Group
+						</h1>
+						{/* tips icon */}
 						<div>
-							<Tooltip color="blue" position="left" message="Hold or right click Group for more information">
-							<button
-								type="button"
-								className="btn bg-gray-700 text-white rounded-lg ml-3"
-								id="options-menu"
-								aria-haspopup="true"
-								aria-expanded="true">
-								<FontAwesomeIcon icon={faInfoCircle} />
-							</button>
+							<Tooltip
+								color="blue"
+								position="left"
+								message="Hold or right click Group for more information">
+								<button
+									type="button"
+									className="btn bg-gray-700 text-white rounded-lg ml-3"
+									id="options-menu"
+									aria-haspopup="true"
+									aria-expanded="true">
+									<FontAwesomeIcon icon={faInfoCircle} />
+								</button>
 							</Tooltip>
 						</div>
 					</div>
@@ -461,7 +511,7 @@ const ChatHome = () => {
 				<div className="body p-4 w-full md:w-[700px] lg:w-[1100px]">
 					{loading ? (
 						<Loader />
-					) : groups.length > 0 ? ( 
+					) : groups.length > 0 ? (
 						<Groups data={groups} />
 					) : (
 						<div className="flex justify-center min-h-[32rem] items-center">
