@@ -84,17 +84,17 @@ const Groups = ({ data }) => {
 
 	const handleRightClick = (event, group) => {
 		event.preventDefault();
-		group.icon = checkIcon(group.icon);
 		setGroupName(group.name);
 		setSelectedGroup(group);
+		setSelectedGroup(group.icon===undefined?checkIcon(group.icon):group.icon);
 		modal.openModal();
 	};
-
+	
 	const startHoldTimer = (group) => {
 		const timer = setTimeout(() => {
-					group.icon = checkIcon(group.icon);
 					setGroupName(group.name);
 					setSelectedGroup(group);
+					setSelectedGroup(group.icon===undefined?checkIcon(group.icon):group.icon);
 		}, 1000);
 		setHoldTimer(timer);
 		modal.openModal();
