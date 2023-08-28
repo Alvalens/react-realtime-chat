@@ -185,7 +185,7 @@ const Groups = ({ data }) => {
 	};
 	// delete
 	const deleteGroup = async (id) => {
-		if (isCreator) {
+		if (!isCreator) {
 			alert("You are not the creator of this group");
 			return;
 		}
@@ -270,7 +270,7 @@ const Groups = ({ data }) => {
 						onChange={(e) => setGroupName(e.target.value)}
 						className="input input-bordered min-w-[100%]"
 					/>
-					{!isCreator && (
+					{isCreator && (
 						<>
 							<button
 								type="button"
