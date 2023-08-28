@@ -185,7 +185,7 @@ const Groups = ({ data }) => {
 	};
 	// delete
 	const deleteGroup = async (id) => {
-		if (!isCreator) {
+		if (isCreator) {
 			alert("You are not the creator of this group");
 			return;
 		}
@@ -270,7 +270,7 @@ const Groups = ({ data }) => {
 						onChange={(e) => setGroupName(e.target.value)}
 						className="input input-bordered min-w-[100%]"
 					/>
-					{isCreator && (
+					{!isCreator && (
 						<>
 							<button
 								type="button"
@@ -477,7 +477,7 @@ const ChatHome = () => {
 
 	return (
 		<>
-			<div className="flex flex-col items-center justify-start h-[640px] bg-slate-200 dark:bg-gray-900 mt-24">
+			<div className="flex flex-col items-center justify-start min-h-[640px] bg-slate-200 dark:bg-gray-900 mt-24">
 				<div className="header min-w-full">
 					<div className="flex justify-center items-center">
 						<h1 className="text-3xl font-bold mb-4 text-gray-700 text-center mt-3 dark:text-gray-200">
