@@ -45,8 +45,7 @@ Experience the power of real-time communication with the Realtime Group Chat Web
    ```
    pnpm install
    ```
-
-5. Start the development server
+6. Start the development server
 
    ```shell
    pnpm run dev
@@ -58,7 +57,7 @@ You can access these pages after you login with google or github in the home pag
 
 ### Chat Home
 
-* Create a new group: ou can start chatting once you had a group or there a listed group in chat home page.
+* Create a new group: you can start chatting once you had a group or there a listed group in chat home page.
 * Editing group info: By holding or right click a group you can change name or icon to your group `you can only edit your own group info.`
 * Delete group: you can also delete your own group and messages stored there.
 * Join group chat: join group by simply clicking the group.
