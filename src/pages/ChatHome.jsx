@@ -445,7 +445,8 @@ const ChatHome = () => {
 					if (!messagesSnapshot.empty) {
 						const lastMessageDoc = messagesSnapshot.docs[0];
 						groupData.totalMessages = messagesSnapshot.size;
-						groupData.lastMessage = lastMessageDoc.data().text;
+						const lastMessage = lastMessageDoc.data().text;
+						groupData.lastMessage = lastMessage.length > 50 ? lastMessage.substring(0, 50) + "..." : lastMessage;
 						groupData.lastMessageUser = lastMessageDoc.data().name;
 					}
 
