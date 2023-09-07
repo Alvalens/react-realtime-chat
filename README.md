@@ -75,17 +75,3 @@ Contributions are welcome! If you find any issues or have suggestions, feel free
 ## License
 
 This project is licensed under the GPL-3.0 License seethe [LICENSE](LICENSE) file for details.
-
-VITE_REACT_APP_API_KEY=
-
-VITE_REACT_APP_AUTH_DOMAIN=
-
-VITE_REACT_APP_PROJECT_ID=
-
-VITE_REACT_APP_STORAGE_BUCKET=
-
-VITE_REACT_APP_MESSAGING_SENDER_ID=
-
-VITE_REACT_APP_APP_ID=
-
-VITE_REACT_APP_MEASUREMENT_ID=
