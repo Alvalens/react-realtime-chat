@@ -48,13 +48,13 @@ const SendMessage = ({scroll, groupId}) => {
 					autoComplete="off"
 					onChange={(e) => setMessage(e.target.value)}
 				/>
-				{loading ? (
+				{!loading ? (
 					<button
 						disabled
-						className="text-white bg-gray-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 min-w-[10%]">
+						className="text-white bg-gray-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center inline-flex items-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 min-w-[10%]">
 						<FontAwesomeIcon
 							icon={faCircleNotch}
-							className="animate-spin"
+							className="animate-spin mr-2"
 						/>
 						Send
 					</button>
