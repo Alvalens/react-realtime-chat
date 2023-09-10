@@ -414,7 +414,6 @@ const ChatHome = () => {
 	const [loading, setLoading] = useState(true);
 	const [groups, setGroups] = useState([]);
 	const { user, loading: authLoad } = useAuth();
-
 	// modal init
 	const handleCreateModal = ModalUse();
 	// get groups
@@ -444,8 +443,11 @@ const ChatHome = () => {
 					if (!messagesSnapshot.empty) {
 						const lastMessageDoc = messagesSnapshot.docs[0];
 						const lastMessage = lastMessageDoc.data().text;
-						
-						groupData.lastMessage = lastMessage.length > 50 ? lastMessage.substring(0, 50) + "..." : lastMessage;
+
+						groupData.lastMessage =
+							lastMessage.length > 50
+								? lastMessage.substring(0, 50) + "..."
+								: lastMessage;
 						groupData.lastMessageUser = lastMessageDoc.data().name;
 					}
 
@@ -460,7 +462,7 @@ const ChatHome = () => {
 		);
 
 		return () => unsubscribe();
-	}, [user]);
+	}, [authLoad, user]);
 
 	if (authLoad || loading) {
 		return <Loader />;
