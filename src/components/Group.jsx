@@ -28,20 +28,8 @@ const GroupName = ({ name, user, msg }) => {
 	);
 };
 
-const TotalMsg = ({ total }) => {
-	if (total > 98) {
-		total = "99+";
-	}
-	return (
-		<div className="ml-3 py-2 flex flex-row justify-center items-center">
-			<Badge color="neutral">
-				<p className="text-sm">{total}</p>
-			</Badge>
-		</div>
-	);
-};
 
-const Group = ({ name, user, msg, total, icon }) => {
+const Group = ({ name, user, msg, icon }) => {
 
 	if (icon === "bomb") {
 		icon = faBomb;
@@ -76,7 +64,6 @@ const Group = ({ name, user, msg, total, icon }) => {
 						<GroupName name={name} user={user} msg={msg} />
 					</div>
 				</div>
-				<TotalMsg total={total} />
 			</div>
 		</>
 	);
@@ -86,13 +73,10 @@ GroupName.propTypes = {
 	user: PropTypes.string,
 	msg: PropTypes.string,
 };
-TotalMsg.propTypes = {
-	total: PropTypes.number,
-};
+
 Group.propTypes = {
 	name: PropTypes.string,
 	user: PropTypes.string,
 	msg: PropTypes.string,
-	total: PropTypes.number,
 };
 export default Group;

@@ -232,7 +232,6 @@ const Groups = ({ data }) => {
 						onMouseUp={clearHoldTimer}>
 						<Group
 							name={group.name}
-							total={group.totalMessages ?? 0}
 							user={group.lastMessageUser}
 							msg={group.lastMessage}
 							icon={group.icon}
@@ -436,7 +435,7 @@ const ChatHome = () => {
 					const queryRef = query(
 						collection(db, "messages"),
 						where("groupId", "==", groupData.id),
-						limit(99),
+						limit(1),
 						orderBy("createdAt", "desc")
 					);
 
@@ -444,8 +443,8 @@ const ChatHome = () => {
 
 					if (!messagesSnapshot.empty) {
 						const lastMessageDoc = messagesSnapshot.docs[0];
-						groupData.totalMessages = messagesSnapshot.size;
 						const lastMessage = lastMessageDoc.data().text;
+						
 						groupData.lastMessage = lastMessage.length > 50 ? lastMessage.substring(0, 50) + "..." : lastMessage;
 						groupData.lastMessageUser = lastMessageDoc.data().name;
 					}
@@ -461,8 +460,7 @@ const ChatHome = () => {
 		);
 
 		return () => unsubscribe();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [user, authLoad]);
+	}, [user]);
 
 	if (authLoad || loading) {
 		return <Loader />;
