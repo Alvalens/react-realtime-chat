@@ -5,7 +5,7 @@ import {
 	addDoc,
 	updateDoc,
 	serverTimestamp,
-	startAfter,
+	onSnapshot,
 	getDocs,
 	query,
 	where,
@@ -13,7 +13,6 @@ import {
 	limit,
 	doc,
 	deleteDoc,
-	onSnapshot,
 } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
@@ -182,6 +181,7 @@ const Groups = ({ data }) => {
 			modal.closeModal();
 			setSelectedIcon(null);
 		}
+
 	};
 	// delete
 	const deleteGroup = async (id) => {
@@ -220,7 +220,7 @@ const Groups = ({ data }) => {
 
 	return (
 		<>
-			<div className="group flex flex-col space-y-3">
+			<div className="flex flex-col space-y-3">
 				{data.map((group) => (
 					<Link
 						to={`/chat?groupId=${group.id}`}
@@ -414,72 +414,9 @@ const ChatHome = () => {
 	const [loading, setLoading] = useState(true);
 	const [groups, setGroups] = useState([]);
 	const { user, loading: authLoad } = useAuth();
-	const [currentPage, setCurrentPage] = useState(3);
+	// modal init
 	const handleCreateModal = ModalUse();
-	const [IntersectionLoading, setIntersectionLoading] = useState(false);
-
-	const handleIntersection = (entries) => {
-		const target = entries[0];
-		setTimeout(() => {}, 1000);
-		if (target.isIntersecting && !IntersectionLoading) {
-			loadMoreGroups();
-		}
-	};
-
-	const loadMoreGroups = async () => {
-		if (IntersectionLoading) {
-			return;
-		}
-		setIntersectionLoading(true);
-		await new Promise((resolve) => setTimeout(resolve, 1000));
-		const lastGroup = groups[groups.length - 1];
-		const snapshot = await getDocs(
-			query(
-				collection(db, "groups"),
-				orderBy("createdAt", "desc"),
-				startAfter(lastGroup.createdAt),
-				limit(3)
-			)
-		);
-		const groupDocs = snapshot.docs;
-		const promises = groupDocs.map(async (doc) => {
-			const groupData = { ...doc.data(), id: doc.id };
-
-			const queryRef = query(
-				collection(db, "messages"),
-				where("groupId", "==", groupData.id),
-				limit(1),
-				orderBy("createdAt", "desc")
-			);
-
-			const messagesSnapshot = await getDocs(queryRef);
-
-			if (!messagesSnapshot.empty) {
-				const lastMessageDoc = messagesSnapshot.docs[0];
-				const lastMessage = lastMessageDoc.data().text;
-
-				groupData.lastMessage =
-					lastMessage.length > 50
-						? lastMessage.substring(0, 50) + "..."
-						: lastMessage;
-				groupData.lastMessageUser = lastMessageDoc.data().name;
-			}
-
-			return groupData;
-		});
-
-		const resolvedGroups = await Promise.all(promises);
-		setGroups((prevGroups) => [...prevGroups, ...resolvedGroups]);
-
-		setCurrentPage(currentPage + 3);
-		setIntersectionLoading(false);
-
-		const load = document.querySelector(".load");
-		if (load) {
-			load.remove();
-		}
-	};
-
+	// get groups
 	useEffect(() => {
 		if (authLoad || !user) {
 			setLoading(false);
@@ -487,31 +424,24 @@ const ChatHome = () => {
 		}
 
 		setLoading(true);
-		const fetchData = async () => {
-			try {
-				const groupQuerySnapshot = await getDocs(
-					query(
-						collection(db, "groups"),
-						orderBy("createdAt", "desc"),
-						limit(10)
-					)
-				);
-
-				const groupDocs = groupQuerySnapshot.docs;
-				const promises = groupDocs.map(async (doc) => {
+		const unsubscribe = onSnapshot(
+			collection(db, "groups"),
+			async (snapshot) => {
+				// Create an array of promises
+				const promises = snapshot.docs.map(async (doc) => {
 					const groupData = { ...doc.data(), id: doc.id };
 
-					const messageQuerySnapshot = await getDocs(
-						query(
-							collection(db, "messages"),
-							where("groupId", "==", groupData.id),
-							limit(1),
-							orderBy("createdAt", "desc")
-						)
+					const queryRef = query(
+						collection(db, "messages"),
+						where("groupId", "==", groupData.id),
+						limit(1),
+						orderBy("createdAt", "desc")
 					);
 
-					if (!messageQuerySnapshot.empty) {
-						const lastMessageDoc = messageQuerySnapshot.docs[0];
+					const messagesSnapshot = await getDocs(queryRef);
+
+					if (!messagesSnapshot.empty) {
+						const lastMessageDoc = messagesSnapshot.docs[0];
 						const lastMessage = lastMessageDoc.data().text;
 
 						groupData.lastMessage =
@@ -524,94 +454,15 @@ const ChatHome = () => {
 					return groupData;
 				});
 
+				// Wait for all promises to resolve
 				const resolvedGroups = await Promise.all(promises);
 				setGroups(resolvedGroups);
 				setLoading(false);
-			} catch (error) {
-				console.error("Error fetching data:", error);
-				setLoading(false);
 			}
-		};
-
-		fetchData();
-	}, [user, authLoad]);
-
-	useEffect(() => {
-		const handleScroll = () => {
-			const { scrollTop, clientHeight, scrollHeight } =
-				document.documentElement;
-			if (scrollTop + clientHeight >= scrollHeight - 10) {
-				const options = {
-					root: null,
-					rootMargin: "0px",
-					threshold: 1.0,
-				};
-
-				const observer = new IntersectionObserver(
-					handleIntersection,
-					options
-				);
-				const target = document.querySelector(".group > :last-child");
-				if (target) {
-					observer.observe(target);
-					console.log("Target Element:", target);
-				} else {
-					console.log("No Target Element");
-				}
-			}
-		};
-
-		window.addEventListener("scroll", handleScroll);
-
-		return () => {
-			window.removeEventListener("scroll", handleScroll);
-		};
-	}, [groups]);
-
-	useEffect(() => {
-		const unsubscribe = onSnapshot(collection(db, "groups"), (snapshot) => {
-			snapshot.docChanges().forEach((change) => {
-				const groupData = { ...change.doc.data(), id: change.doc.id };
-				const index = groups.findIndex(
-					(group) => group.id === groupData.id
-				);
-				if (change.type === "added" && index === -1) {
-					console.log("Added group:", groupData);
-					const queryRef = query(
-						collection(db, "messages"),
-						where("groupId", "==", groupData.id),
-						limit(1),
-						orderBy("createdAt", "desc")
-					);
-
-					getDocs(queryRef).then((messagesSnapshot) => {
-						const lastMessageDoc = messagesSnapshot.docs[0];
-						if (lastMessageDoc) {
-							const lastMessage = lastMessageDoc.data().text;
-
-							groupData.lastMessage =
-								lastMessage.length > 50
-									? lastMessage.substring(0, 50) + "..."
-									: lastMessage;
-							groupData.lastMessageUser =
-								lastMessageDoc.data().name;
-						}
-						setGroups((prevGroups) => [groupData, ...prevGroups]);
-					});
-				} else if (change.type === "removed") {
-					setGroups((prevGroups) => {
-						const updatedGroups = prevGroups.filter(
-							(group) => group.id !== groupData.id
-						);
-						return updatedGroups;
-					});
-					console.log("Removed group:", groupData);
-				}
-			});
-		});
+		);
 
 		return () => unsubscribe();
-	}, []);
+	}, [authLoad, user]);
 
 	if (authLoad || loading) {
 		return <Loader />;
@@ -624,22 +475,7 @@ const ChatHome = () => {
 			</div>
 		);
 	}
-	if (IntersectionLoading) {
-		// show first loading last child of group that have class name loading
-		const loading = document.querySelector(".group > :last-child");
-		const div = document.createElement("div");
-		div.className =
-			"load min-w-full min-h-[70px] flex justify-between items-center bg-slate-400 rounded-lg px-5 py-2 dark:bg-gray-800 dark:hover:bg-gray-700 transition-all duration-300 ease-in-out animate-pulse";
-		if (loading) {
-			loading.after(div);
-		}
-	} else {
-		// remove last child of group that have class name loading
-		const loading = document.querySelector(".group > :last-child");
-		if (loading && loading.classList.contains("load")) {
-			loading.remove();
-		}
-	}
+
 	return (
 		<>
 			<div className="flex flex-col items-center justify-start min-h-[640px] bg-slate-200 dark:bg-gray-900 mt-24">
